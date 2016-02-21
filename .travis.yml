@@ -16,9 +16,6 @@ script:
       file target/release/hello &&
       ldd target/release/hello
 
-branches:
-  only: master
-
 notifications:
   email:
     on_success: never
