@@ -2,7 +2,7 @@
 authors = ["Jorge Aparicio <japaricious@gmail.com>"]
 build = "build.rs"
 name = "rust-everywhere"
-version = "0.1.19"
+version = "0.1.20"
 
 [[bin]]
 name = "hello"
