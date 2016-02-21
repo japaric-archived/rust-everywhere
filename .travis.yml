@@ -4,25 +4,26 @@ language: rust
 rust: stable
 
 env:
-  global:
-    - secure: pIERpF0cNsOP5OXPZH6wZgL4CsruAV7DUf8W35mcB1rIDKuPFnMkqOy7Y2vVEKNgSrUNVwLb8ym4qqy3QRQWy0vZE5fJdhCa0oePeAfr+Q3Y0zBZHiVlNWy9nWZsYKu4O8SXT8xK4dpLDwwgj3/s5sCJWdLC657QkzJRbQaQc7IbGW+FkWzwczzO2PKnSgjtXRRqpOdt3RwuiwBWBvCPYsMACOtYBWTOpjp3tKpLn5eHKhW7rjydKDwyERSOCNNJJ7j9QVQ5KrbMfBh4Nrap2tDLI8Pn3sDriN3ykzh++lN3VqucglJCrmzoCLYpURlvuNdhVIqWqVPFU9I+jl5h0n7iI4xa5bbRFGWPDfKdF9xJFz+C37fq3F2glHXygJaCaWI/n0WWSSs0Jf++l+Jt/m7ljA0KHB3TnjA5+GlUBTg9GBqCNgiaWGy6Lo1sKSE5of9ylXg2fZz6fgYmiRrBvGfgBqVbZ0vUzQGiZGyWHmlDUqdwCzx8k/9ZNeeZfVivzsFqi5468iUESkto/KLLPqLkFDUtXLEz5MZ3gluIAjDepDT68SelDWrDocSlQSe54IFr8WdQv1Z+FIVLzzD54c5AXPWtlJH1OWigeJXaN3PyfXWBKla7vh4SgzlppgaNUUZ3RPR5RabDv4XmsWU9FqnUrSRlCay9TlORWs8o4GY=
-  matrix:
-    - TARGET=x86_64-unknown-linux-gnu
-    - TARGET=x86_64-unknown-linux-musl
+  - TARGET=x86_64-unknown-linux-gnu
+  - TARGET=x86_64-unknown-linux-musl
 
 install:
   - sh ci/install.sh
 
 script:
-  - sh ci/run.sh
+  - sh ci/script.sh
+
+after_success:
+  - sh ci/after_success.sh
 
 notifications:
   email:
     on_success: never
 
 deploy:
-  provider: script
-  script: ci/deploy.sh
-  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: pF/Y7qIeKjrunbI3M+JSiTwsTey77Vy+Xi7KpLRrxBHGgWUMNhivJ6QIDvZfrl6qk1TDAO+3GVZPFfMcqz6s11zkVDfwPaTY9fpueaC8ZxdoeYkhJX3soTD3KUKtMMtq/GFbdvGJTs3EWHKnyQVdY8SUEj/dK72HsITP0mhw9HjznWDOy5Xb1SgdB3lKvyLIBHOQSJXI6cELDuiawQtkTwIqBFiv3xRN4+jXrcIqpWF7515PIas5L9PfT5bZhAXoTSVIuqr3TI/1hsJMbinHXhizz+eMNwqLYUarLJpyYIU/QgJ3II8UfxI1CXUEgAg7QTrPJjJ3/wCh83kTdYBbsWIdotYdVjraFMhQZ+dl2cHFBCptFUqDfoMlwvi3yS9KKNSn0Fajqky0gBRyOCA4Wyc1+CkR4qmGdG/1G8t0oyI1GL2kDDNqmGHgmAN0D0RmijFy+KOgu5OVJFhHRgmqW5kX2NZCQ9zkmtGdWZ+SVEymTN3QkxMtHv6RJ9LUa2HaC8vCGB7U+4JeLUWh8yb5kzXi+paMSz4nDmDK2JCa15zp2lESHUALKh/hejFBPW2vObgBkYzV0gL0wtNJL8UohlgkzJuBa8Q4cr19jP9HsD64H3I2wzZ0W/hXVrg2dlqbWG5tqeZpRv6b7ix6GJLZsfOgZ/FjlPhGcp22OvmNOgc=
+  file: deploy/$TARGET-hello
   on:
     tags: true
