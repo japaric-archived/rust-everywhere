@@ -17,7 +17,7 @@ test_script:
 
 after_test:
   - mkdir deploy
-  - copy target/release/hello deploy\$(TARGET)-hello
+  - copy target\release\hello deploy\$(TARGET)-hello
 
 artifacts:
   - path: deploy\$(TARGET)-hello
