@@ -22,3 +22,12 @@ branches:
 notifications:
   email:
     on_success: never
+
+deploy:
+  provider: releases
+  api_key:
+    secure: tEqtwPWBtS8LSeaodae7IO4Hn7/HD/WawIoUzx2wkp9ROjDL/SuLexIgoa+0gVhdQoyRE7RZ/ctlMPJrDnxitamANw96/K25dlGYL5xd6LYLhD3lW1SGN0goMpfKtsfqg2pjt4tLbPfwm/6UtsdxJZj3D+e+MJBh9ndjncR3nMP0wSlFmcXMT1RDivbMZ+1yO3c2U0bE3x+EGfr8gnc/9rf8nLnRrQ6Rf8/3juSqfM04LRpXFW90lDgoIJm/U0iPYA5oAHJ63j+uuPwHVd3W5zh7Zi5TSEdV2JwsVsvTEmVCOCuFtDb3sAV06EP46Gh/qIo5CXe/xuFqWhkBDP7h/wMeiJOhRc3A1J60Jj+LulFsmcgL+ems5MBmmCgi+LJpuOgqGUedadhEEIcgh+XoPiEvwmdgR66+Og8Y6BXwTIgxi4Kvock+1M1hC5ANVaT7DB1zeYDSXKjy79vFupOMJAtOquZnwIjjByIwRVfe2JmiDRkYBKoYjoK8dz4/jEG6Hl8q9yFVgdzOH2sii23ZWdZY0OD6p1sBFnm8f55MtqxQHmiDGuqZ/CVrsGuplIh3crHA+Rg2UET5XPa9A5X4kf07s0C7JG9y2T4KVEQE8o8a6Pvl1e7l+Wr7sEcKIVIHTb0ICDfQ0lUkezPKRhgy2rC5cexkOk4j0zdt0KVJSbA=
+  file: target/release/hello
+  skip_cleanup: true
+  on:
+    tags: true
