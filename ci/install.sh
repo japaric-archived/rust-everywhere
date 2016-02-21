@@ -2,14 +2,9 @@ set -ex
 
 # install standard libraries needed for cross compilation
 case $TARGET in
-  armv7-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
-    version=$(rustc -V | cut -d' ' -f2)
-
-    if [ "$TARGET" = "armv7-unknown-linux-gnueabihf" ]; then
-      # There is no official standard libraries for this target, so we use the
-      # more generic ones
-      tarball=rust-std-${version}-arm-unknown-linux-gnueabihf
-
+  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+    if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
+      # information about the cross compiler
       arm-linux-gnueabihf-gcc -v
 
       # configure the linker for cross compilation
@@ -18,9 +13,10 @@ case $TARGET in
 [target.$TARGET]
 linker = "arm-linux-gnueabihf-gcc"
 EOF
-    else
-      tarball=rust-std-${version}-${TARGET}
     fi
+
+    version=$(rustc -V | cut -d' ' -f2)
+    tarball=rust-std-${version}-${TARGET}
 
     curl -Os http://static.rust-lang.org/dist/${tarball}.tar.gz
     tar xzf ${tarball}.tar.gz
