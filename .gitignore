@@ -1,4 +1,5 @@
 *.rs.bk
 Cargo.lock
+draft.md
 src/main.rs
 target
