@@ -3,9 +3,9 @@ language: rust
 
 rust: stable
 
-matrix:
-  include:
-    - env: STATIC=yes
+env:
+  - TARGET=x86_64-unknown-linux-gnu
+  - TARGET=x86_64-unknown-linux-musl
 
 install:
   - sh ci/install.sh
@@ -24,5 +24,4 @@ deploy:
   file: target/release/hello
   skip_cleanup: true
   on:
-    repo: japaric/rust-everywhere
     tags: true
