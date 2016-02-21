@@ -28,7 +28,7 @@ artifacts:
 
 deploy:
   description: 'Windows release'
-  artifact: hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
+  artifact: deploy\hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
   auth_token:
     secure: 1+6upr5ZBEd0nETJIizhrGdu8aU8RlB2g6cwRzf3/Si1ruhwif58ddJYY1+bvngA
   provider: GitHub
