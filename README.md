@@ -1,3 +1,5 @@
+[![Travis](https://travis-ci.org/japaric/rust-everywhere.svg?branch=master)](https://travis-ci.org/japaric/rust-everywhere)
+
 # `rust-everywhere`
 
 > An attempt at building Rust binaries for Linux, Mac and Windows without having to mess around with
