@@ -1,3 +1,5 @@
+#![deny(warnings)]
+
 use std::env;
 use std::fs::File;
 use std::io::Write;
@@ -7,5 +9,5 @@ fn hello() -> String {
 }
 
 fn main() {
-    File::create("src/main.rs").unwrap().write_all(hello().as_bytes());
+    File::create("src/main.rs").unwrap().write_all(hello().as_bytes()).unwrap();
 }
