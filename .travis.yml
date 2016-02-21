@@ -12,7 +12,7 @@ script:
   - |
       travis-cargo build &&
       travis-cargo run &&
-      travis-cargo build --release &&
+      travis-cargo build -- --release &&
       file target/release/hello &&
       ldd target/release/hello
 
