@@ -16,16 +16,16 @@ test_script:
   - cargo build --release
 
 after_test:
-  - mkdir deploy
-  - copy target\release\hello.exe deploy\$(TARGET)-hello.exe
+  - 7z a hello-%TARGET%.zip target\release\hello.exe
 
 artifacts:
-  - path: deploy\$(TARGET)-hello.exe
-    name: $(TARGET)-hello.exe
+  - path: hello-$(TARGET).zip
+    name: hello-$(TARGET).zip
+    type: zip
 
 deploy:
   description: 'Windows release'
-  artifact: /.*\.exe/
+  artifact: hello-$(TARGET).zip
   auth_token:
     secure: 1+6upr5ZBEd0nETJIizhrGdu8aU8RlB2g6cwRzf3/Si1ruhwif58ddJYY1+bvngA
   provider: GitHub
