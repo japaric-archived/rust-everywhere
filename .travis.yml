@@ -27,8 +27,8 @@ install:
 script:
   - sh ci/script.sh
 
-after_success:
-  - sh ci/after_success.sh
+before_deploy:
+  - sh ci/before_deploy.sh
 
 notifications:
   email:
@@ -38,7 +38,7 @@ deploy:
   provider: releases
   api_key:
     secure: pF/Y7qIeKjrunbI3M+JSiTwsTey77Vy+Xi7KpLRrxBHGgWUMNhivJ6QIDvZfrl6qk1TDAO+3GVZPFfMcqz6s11zkVDfwPaTY9fpueaC8ZxdoeYkhJX3soTD3KUKtMMtq/GFbdvGJTs3EWHKnyQVdY8SUEj/dK72HsITP0mhw9HjznWDOy5Xb1SgdB3lKvyLIBHOQSJXI6cELDuiawQtkTwIqBFiv3xRN4+jXrcIqpWF7515PIas5L9PfT5bZhAXoTSVIuqr3TI/1hsJMbinHXhizz+eMNwqLYUarLJpyYIU/QgJ3II8UfxI1CXUEgAg7QTrPJjJ3/wCh83kTdYBbsWIdotYdVjraFMhQZ+dl2cHFBCptFUqDfoMlwvi3yS9KKNSn0Fajqky0gBRyOCA4Wyc1+CkR4qmGdG/1G8t0oyI1GL2kDDNqmGHgmAN0D0RmijFy+KOgu5OVJFhHRgmqW5kX2NZCQ9zkmtGdWZ+SVEymTN3QkxMtHv6RJ9LUa2HaC8vCGB7U+4JeLUWh8yb5kzXi+paMSz4nDmDK2JCa15zp2lESHUALKh/hejFBPW2vObgBkYzV0gL0wtNJL8UohlgkzJuBa8Q4cr19jP9HsD64H3I2wzZ0W/hXVrg2dlqbWG5tqeZpRv6b7ix6GJLZsfOgZ/FjlPhGcp22OvmNOgc=
-  file: deploy/$TARGET-hello
+  file: deploy/hello-${TRAVIS_TAG}-${TARGET}.tar.gz
   skip_cleanup: true
   on:
     tags: true
