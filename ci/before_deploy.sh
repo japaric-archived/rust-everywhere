@@ -12,4 +12,4 @@ case $TARGET in
 esac
 
 cd deploy
-tar czf hello-${TRAVIS_TAG}-${TARGET}.tar.gz
+tar czf hello-${TRAVIS_TAG}-${TARGET}.tar.gz hello
