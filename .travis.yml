@@ -30,4 +30,5 @@ deploy:
   file: target/release/hello
   skip_cleanup: true
   on:
+    repo: japaric/rust-everywhere
     tags: true
