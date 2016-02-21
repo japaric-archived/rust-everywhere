@@ -15,11 +15,20 @@ matrix:
   # Add targets
   include:
     - os: linux
+      env: TARGET=arm-unknown-linux-gnueabihf
+    - os: linux
       env: TARGET=x86_64-unknown-linux-gnu
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl
     - os: osx
       env: TARGET=x86_64-apple-darwin
+
+addons:
+  apt:
+    packages:
+      - gcc-arm-linux-gnueabihf
+      - libc6-armhf-cross
+      - libc6-dev-armhf-cross
 
 install:
   - sh ci/install.sh
