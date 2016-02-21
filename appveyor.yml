@@ -15,9 +15,17 @@ test_script:
   - cargo run
   - cargo build --release
 
+after_test:
+  - mkdir deploy
+  - copy target/release/hello deploy\$(TARGET)-hello
+
+artifacts:
+  - path: deploy\$(TARGET)-hello
+    name: $(TARGET)-hello
+
 deploy:
   description: 'Windows release'
-  artifact: target/release/hello
+  artifact: $(TARGET)-hello
   auth_token:
     secure: 1+6upr5ZBEd0nETJIizhrGdu8aU8RlB2g6cwRzf3/Si1ruhwif58ddJYY1+bvngA
   provider: GitHub
