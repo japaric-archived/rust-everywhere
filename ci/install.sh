@@ -1,5 +1,6 @@
 set -ex
 
+# install standard libraries
 case $TARGET in
   x86_64-unknown-linux-musl)
     version=$(rustc -V | cut -d' ' -f2)
@@ -9,5 +10,7 @@ case $TARGET in
     ${tarball}/install.sh --prefix=$(rustc --print sysroot)
     rm -r ${tarball}
     rm ${tarball}.tar.gz
+    ;;
+  *)
     ;;
 esac
