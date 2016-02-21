@@ -1,8 +1,10 @@
 set -ex
 
-# install standard libraries needed for cross compilation
 case $TARGET in
-  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+  # Install standard libraries needed for cross compilation
+  arm-unknown-linux-gnueabihf | \
+  i686-unknown-linux-gnu | \
+  x86_64-unknown-linux-musl)
     if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
       # information about the cross compiler
       arm-linux-gnueabihf-gcc -v
@@ -24,6 +26,7 @@ EOF
     rm -r ${tarball}
     rm ${tarball}.tar.gz
     ;;
+  # Nothing else to do for native builds
   *)
     ;;
 esac

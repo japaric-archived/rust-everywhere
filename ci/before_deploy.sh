@@ -3,9 +3,13 @@ set -ex
 mkdir deploy
 
 case $TARGET in
-  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+  # Cross compiled
+  arm-unknown-linux-gnueabihf | \
+  i686-unknown-linux-gnu | \
+  x86_64-unknown-linux-musl)
     cp target/$TARGET/release/hello deploy/hello
     ;;
+  # Native builds
   *)
     cp target/release/hello deploy/hello
     ;;
