@@ -40,7 +40,11 @@ deploy:
     tags: true
 
 branches:
-  only: master
+  only:
+    # Pushes and PR to the master branch
+    - master
+    # Ruby regex to match tags. Required, or travis won't trigger deploys
+    - /^v\d+\.\d+\.\d+.*$/
 
 notifications:
   email:
