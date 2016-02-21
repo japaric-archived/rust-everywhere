@@ -15,17 +15,20 @@ test_script:
   - cargo run
   - cargo build --release
 
-after_test:
-  - 7z a hello-%TARGET%.zip target\release\hello.exe
+before_deploy:
+  - mkdir deploy
+  - copy target\release\hello.exe deploy
+  - cd deploy
+  - 7z a hello-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip hello.exe
 
 artifacts:
-  - path: hello-$(TARGET).zip
-    name: hello-$(TARGET).zip
+  - path: deploy\hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
+    name: hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
     type: zip
 
 deploy:
   description: 'Windows release'
-  artifact: hello-$(TARGET).zip
+  artifact: /.*\.zip/
   auth_token:
     secure: 1+6upr5ZBEd0nETJIizhrGdu8aU8RlB2g6cwRzf3/Si1ruhwif58ddJYY1+bvngA
   provider: GitHub
