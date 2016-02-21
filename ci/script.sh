@@ -1,15 +1,19 @@
 set -ex
 
 case $TARGET in
-  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+  # Cross compilation
+  arm-unknown-linux-gnueabihf | \
+  i686-unknown-linux-gnu | \
+  x86_64-unknown-linux-musl)
     cargo build --target $TARGET
-    if [ "$TARGET" = "x86_64-unknown-linux-musl" ]; then
+    if [ "$TARGET" != "arm-unknown-linux-gnueabihf" ]; then
       cargo run --target $TARGET
       cargo test --target $TARGET
     fi
     cargo build --target $TARGET --release
     file target/$TARGET/release/hello
     ;;
+  # Native build
   *)
     cargo build
     cargo run

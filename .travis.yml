@@ -23,6 +23,12 @@ matrix:
             - libc6-armhf-cross
             - libc6-dev-armhf-cross
     - os: linux
+      env: TARGET=i686-unknown-linux-gnu
+      addons:
+        apt:
+          packages:
+            - gcc-multilib
+    - os: linux
       env: TARGET=x86_64-unknown-linux-gnu
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl
