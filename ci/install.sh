@@ -3,6 +3,7 @@ set -ex
 case $TARGET in
   # Install standard libraries needed for cross compilation
   arm-unknown-linux-gnueabihf | \
+  i686-apple-darwin | \
   i686-unknown-linux-gnu | \
   x86_64-unknown-linux-musl)
     if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then

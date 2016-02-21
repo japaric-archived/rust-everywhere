@@ -3,6 +3,7 @@ set -ex
 case $TARGET in
   # Cross compilation
   arm-unknown-linux-gnueabihf | \
+  i686-apple-darwin | \
   i686-unknown-linux-gnu | \
   x86_64-unknown-linux-musl)
     cargo build --target $TARGET

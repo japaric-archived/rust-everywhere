@@ -5,6 +5,7 @@ mkdir deploy
 case $TARGET in
   # Cross compiled
   arm-unknown-linux-gnueabihf | \
+  i686-apple-darwin | \
   i686-unknown-linux-gnu | \
   x86_64-unknown-linux-musl)
     cp target/$TARGET/release/hello deploy/hello

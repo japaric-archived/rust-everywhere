@@ -33,6 +33,8 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl
     - os: osx
+      env: TARGET=i686-apple-darwin
+    - os: osx
       env: TARGET=x86_64-apple-darwin
 
 install:
