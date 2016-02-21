@@ -2,8 +2,8 @@ set -ex
 
 # install standard libraries
 case $TARGET in
-  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
-    if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
+  armv7-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+    if [ "$TARGET" = "armv7-unknown-linux-gnueabihf" ]; then
       arm-linux-gnueabihf-gcc -v
 
       mkdir -p .cargo

@@ -3,7 +3,7 @@ set -ex
 mkdir deploy
 
 case $TARGET in
-  arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
+  armv7-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
     cp target/$TARGET/release/hello deploy/hello
     ;;
   *)
