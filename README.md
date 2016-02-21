@@ -1,4 +1,5 @@
 [![Travis](https://travis-ci.org/japaric/rust-everywhere.svg?branch=master)](https://travis-ci.org/japaric/rust-everywhere)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/d37xqtcx5ct9fyfr?svg=true)](https://ci.appveyor.com/project/japaric/rust-everywhere)
 
 # `rust-everywhere`
 
