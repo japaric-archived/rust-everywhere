@@ -3,7 +3,7 @@ set -ex
 case $TARGET in
   arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
     cargo build --target $TARGET
-    if [ "$TARGET" = "x86_64-unknonwn-linux-musl" ]; then
+    if [ "$TARGET" = "x86_64-unknown-linux-musl" ]; then
       cargo run --target $TARGET
       cargo test --target $TARGET
     fi
