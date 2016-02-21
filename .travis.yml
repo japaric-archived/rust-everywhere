@@ -30,10 +30,6 @@ script:
 before_deploy:
   - sh ci/before_deploy.sh
 
-notifications:
-  email:
-    on_success: never
-
 deploy:
   provider: releases
   api_key:
@@ -42,3 +38,10 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+
+branches:
+  only: master
+
+notifications:
+  email:
+    on_success: never
