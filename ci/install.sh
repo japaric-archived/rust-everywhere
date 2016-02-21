@@ -4,6 +4,8 @@ set -ex
 case $TARGET in
   arm-unknown-linux-gnueabihf | x86_64-unknown-linux-musl)
     if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
+      arm-linux-gnueabihf-gcc -v
+
       mkdir -p .cargo
       cat >.cargo/config <<EOF
 [target.$TARGET]
