@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::Write;
 
 fn hello() -> String {
-    format!("fn main() {{ println!(\"{}: {} says hello!\") }}",
+    format!("fn main() {{ println!(\"{}: {} says hello!\") }}\n#[test] fn ok() {{ assert!(true) }}",
             env::var("CARGO_PKG_VERSION").unwrap(),
             env::var("TARGET").unwrap())
 }

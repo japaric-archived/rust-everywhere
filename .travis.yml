@@ -23,6 +23,7 @@ matrix:
     - os: osx
       env: TARGET=x86_64-apple-darwin
 
+# XXX is there any way to install these only on a certain builder?
 addons:
   apt:
     packages:

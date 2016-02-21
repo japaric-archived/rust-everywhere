@@ -13,6 +13,7 @@ build: false
 test_script:
   - cargo build
   - cargo run
+  - cargo test
   - cargo build --release
 
 after_test:
