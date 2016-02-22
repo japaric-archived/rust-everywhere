@@ -6,7 +6,7 @@ case $TARGET in
   i686-apple-darwin | \
   i686-unknown-linux-gnu | \
   x86_64-unknown-linux-musl)
-    cargo build --target $TARGET
+    cargo build --target $TARGET --verbose
     if [ "$TARGET" != "arm-unknown-linux-gnueabihf" ]; then
       cargo run --target $TARGET
       cargo test --target $TARGET
@@ -16,7 +16,7 @@ case $TARGET in
     ;;
   # Native build
   *)
-    cargo build
+    cargo build --verbose
     cargo run
     cargo test
     cargo build --release
