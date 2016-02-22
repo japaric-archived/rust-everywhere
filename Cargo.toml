@@ -2,7 +2,7 @@
 authors = ["Jorge Aparicio <japaricious@gmail.com>"]
 build = "build.rs"
 name = "hello"
-version = "0.1.30"
+version = "0.1.31"
 
 [[bin]]
 name = "hello"
