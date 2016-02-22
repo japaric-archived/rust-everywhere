@@ -13,7 +13,7 @@ env:
   global:
     # This will be part of the release tarball
     # TODO change the project name
-    - PROJECT_NAME=hello
+    - PROJECT_NAME=rust-everywhere
 
 matrix:
   # Clear the whole matrix

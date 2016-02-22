@@ -2,7 +2,7 @@ environment:
   global:
     # This will be used as part of the zipfile name
     # TODO change the project name
-    PROJECT_NAME: hello
+    PROJECT_NAME: rust-everywhere
     # TODO you may want to change which stable Rust version is used
     RUST_VERSION: 1.6.0
   # TODO feel free to delete targets you are not interested in
@@ -41,7 +41,7 @@ after_test:
   # TODO update this part to copy the artifacts that make sense for your project
   - copy target\release\hello.exe staging
   - cd staging
-    # release zipfile will look like 'hello-v1.2.3-x86_64-pc-windows-msvc'
+    # release zipfile will look like 'rust-everywhere-v1.2.3-x86_64-pc-windows-msvc'
   - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
 
 # IMPORTANT All the artifacts need to be listed here, or they won't be uploaded to GitHub
