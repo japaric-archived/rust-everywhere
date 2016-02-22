@@ -1,22 +1,35 @@
 sudo: false
+
 language: rust
 
+# NOTE This configuration has only be tested on the stable channel
 rust: stable
 
 os:
   - linux
   - osx
 
+env:
+  global:
+    # This will be part of the release tarball
+    # TODO change the project name
+    - PROJECT_NAME=hello
+
 matrix:
   # Clear the whole matrix
   exclude:
     - os: linux
     - os: osx
-  # Add targets
+  # Add each target manually
+  # TODO feel free to remove targets you are not interested in
+  # TODO you may want to install packages for specific build jobs, use the addons.apt.packages
+  # pattern shown below
   include:
+    # WARNING Experimental target. Tests are not executed. And by the next Rust stable release, this
+    # target will be replaced by `armv7-unknown-linux-gnueabihf`.
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf
-      # Extra packages only for this builder
+      # Extra packages only for this build job
       addons:
         apt:
           packages:
@@ -51,10 +64,18 @@ before_deploy:
 
 deploy:
   provider: releases
+  # TODO Regenerate this api_key for your project, this one won't work for you. Here's how:
+  # - Go to 'https://github.com/settings/tokens/new' and generate a Token with only the
+  # `public_repo` scope enabled
+  # - Call `travis encrypt $github_token` where $github_token is the token you got in the previous
+  # step and `travis` is the official Travis CI gem (see https://rubygems.org/gems/travis/)
+  # - Enter the "encrypted value" below
   api_key:
-    secure: pF/Y7qIeKjrunbI3M+JSiTwsTey77Vy+Xi7KpLRrxBHGgWUMNhivJ6QIDvZfrl6qk1TDAO+3GVZPFfMcqz6s11zkVDfwPaTY9fpueaC8ZxdoeYkhJX3soTD3KUKtMMtq/GFbdvGJTs3EWHKnyQVdY8SUEj/dK72HsITP0mhw9HjznWDOy5Xb1SgdB3lKvyLIBHOQSJXI6cELDuiawQtkTwIqBFiv3xRN4+jXrcIqpWF7515PIas5L9PfT5bZhAXoTSVIuqr3TI/1hsJMbinHXhizz+eMNwqLYUarLJpyYIU/QgJ3II8UfxI1CXUEgAg7QTrPJjJ3/wCh83kTdYBbsWIdotYdVjraFMhQZ+dl2cHFBCptFUqDfoMlwvi3yS9KKNSn0Fajqky0gBRyOCA4Wyc1+CkR4qmGdG/1G8t0oyI1GL2kDDNqmGHgmAN0D0RmijFy+KOgu5OVJFhHRgmqW5kX2NZCQ9zkmtGdWZ+SVEymTN3QkxMtHv6RJ9LUa2HaC8vCGB7U+4JeLUWh8yb5kzXi+paMSz4nDmDK2JCa15zp2lESHUALKh/hejFBPW2vObgBkYzV0gL0wtNJL8UohlgkzJuBa8Q4cr19jP9HsD64H3I2wzZ0W/hXVrg2dlqbWG5tqeZpRv6b7ix6GJLZsfOgZ/FjlPhGcp22OvmNOgc=
-  file: deploy/hello-${TRAVIS_TAG}-${TARGET}.tar.gz
+    secure: aLyVgmimaRMCvh2YF4ek0ZseWqKpqCSrvvYdf5rxhZUBnYK+KKlHBsPudtmWbHTh19PPC1C3wSHa8y94IObGl3iRRTICh5e/Oz9xzCiPYlQ0ZGmtM+MfRtUq2xFRc6aaAkrnfW0ur3uxk4a7ZBIOMg3D7kG7Ah4dg5dVf26OmpSBdEijo9bcvOLHXwZIc1bby+MJl8kxzdlwaV7UTrqHQFh+tmMsoO0GQcQpCP3y45f5/8aTkHRmnC1IKCiHKDZpRFDWhdoz02NGWcCnoH43iSwOobe1jacHicmZ7dNHKT/e1tfUIPpbO81fvQ7FHifvBRoO64Wvl5l/IaoDcngv6o11JlWRxIuZnr01oDv+DW8kv9POLYeh2xzMaQkZ8NkPZl82hqr8t0q0OtXZjm/Hysdcvr0T26hbwqs1sOkAAaeRdR0zl/Log53hNqM4HaZZ0CnKGU8dSatC+NOgHEfz68fHArf8DUdKIr3By73tD7T7kJjT1h6F+4E2nYVbHrl20/PV+XO97+9LUNOy6IhbQN0hQjoHVra5oWcZy9WiWgX8IV74yw6vEAQh6XDUWtU9XR7Tl1TjaO/mR8MgOJuQkLt58QWPs50BgUD9XSvDVIurPilZ0bQzvM7js6nTupmd3oaZiYSZCxOTj0LpV34fdEaFX0qSlrSFQw6YYMAawks=
+  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.tar.gz
+  # don't delete the artifacts from previous phases
   skip_cleanup: true
+  # deploy when a new tag is pushed
   on:
     tags: true
 
@@ -62,7 +83,8 @@ branches:
   only:
     # Pushes and PR to the master branch
     - master
-    # Ruby regex to match tags. Required, or travis won't trigger deploys
+    # IMPORTANT Ruby regex to match tags. Required, or travis won't trigger deploys when a new tag
+    # is pushed. This regex matches semantic versions like v1.2.3-rc4+2016.02.22
     - /^v\d+\.\d+\.\d+.*$/
 
 notifications:

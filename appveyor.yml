@@ -1,44 +1,67 @@
 environment:
+  gloabl:
+    # This will be used as part of the zipfile name
+    # TODO change the project name
+    - PROJECT_NAME=hello
+  # TODO feel free to delete targets you are not interested in
   matrix:
-  - TARGET: i686-pc-windows-gnu
-    MSYS2_BITS: 32
-  - TARGET: i686-pc-windows-msvc
-  - TARGET: x86_64-pc-windows-gnu
-    MSYS2_BITS: 64
-  - TARGET: x86_64-pc-windows-msvc
+    - TARGET: i686-pc-windows-gnu
+      MSYS2_BITS: 32
+    - TARGET: i686-pc-windows-msvc
+    - TARGET: x86_64-pc-windows-gnu
+      MSYS2_BITS: 64
+    - TARGET: x86_64-pc-windows-msvc
+
+# Install Rust and Cargo
+# (Shamelessly stolen from https://github.com/rust-lang/libc/blob/master/appveyor.yml)
 install:
-  - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-${env:TARGET}.exe"
+  # TODO in the future you may want to change which stable Rust version is used
+  - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-1.6.0-${env:TARGET}.exe"
   - rust-nightly-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
   - SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin
   - if defined MSYS2_BITS set PATH=%PATH%;C:\msys64\mingw%MSYS2_BITS%\bin
   - rustc -V
   - cargo -V
 
+# ???
 build: false
 
+# Equivalent to Travis' `script` phase
+# TODO modify this phase as you see fit
 test_script:
   - cargo build --verbose
   - cargo run
   - cargo test
   - cargo build --release
 
+# Equivalent to `before_deploy` phase
 after_test:
-  - mkdir deploy
-  - copy target\release\hello.exe deploy
-  - cd deploy
-  - 7z a hello-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip hello.exe
+  - mkdir staging
+  # TODO update this part to copy the artifacts that make sense for your project
+  - copy target\release\hello.exe staging
+  - cd staging
+    # release zipfile will look like 'hello-v1.2.3-x86_64-pc-windows-msvc'
+  - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
 
+# IMPORTANT All the artifacts need to be listed here, or they won't be uploaded to GitHub
 artifacts:
-  - path: deploy\hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
-    name: hello-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
+  - path: $(PROJECT_NAME)-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
+    name: $(PROJECT_NAME)-$(APPVEYOR_REPO_TAG_NAME)-$(TARGET).zip
     type: zip
 
 deploy:
   description: 'Windows release'
+  # All the zipped artifacts will be deployed
   artifact: /.*\.zip/
+  # TODO Regenerate this auth_token for your project, this one won't work for you. Here's how:
+  # - Go to 'https://github.com/settings/tokens/new' and generate a Token with only the
+  # `public_repo` scope enabled
+  # - Then go to 'https://ci.appveyor.com/tools/encrypt' and enter the newly generated token.
+  # - Enter the "encrypted value" below
   auth_token:
-    secure: 1+6upr5ZBEd0nETJIizhrGdu8aU8RlB2g6cwRzf3/Si1ruhwif58ddJYY1+bvngA
+    secure: xv0gNKR4j8Zyr3yFkqBADMdkR/6CMOp5ixVFc1uf8SHOndhTXHns4dPpQJKS6MWx
   provider: GitHub
+  # deploy when a new tag is pushed
   on:
     appveyor_repo_tag: true
 

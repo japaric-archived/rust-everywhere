@@ -1,7 +1,15 @@
+# `before_deploy` phase: here we package the build artifacts
+
 set -ex
 
-mkdir deploy
-cp target/$TARGET/release/hello deploy/hello
+# create a "staging" directory
+mkdir staging
 
-cd deploy
-tar czf hello-${TRAVIS_TAG}-${TARGET}.tar.gz hello
+# TODO update this part to copy the artifacts that make sense for your project
+# NOTE All Cargo build artifacts will be under the 'target/$TARGET/{debug,release}'
+cp target/$TARGET/release/hello staging
+
+cd staging
+
+# release tarball will look like 'hello-v1.2.3-x86_64-unknown-linux-gnu.tar.gz'
+tar czf ../${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.tar.gz *

@@ -1,3 +1,5 @@
+# `install` phase: install stuff needed for the `script` phase
+
 set -ex
 
 case $TARGET in
@@ -35,3 +37,5 @@ EOF
   *)
     ;;
 esac
+
+# TODO if you need to install extra stuff add it here
