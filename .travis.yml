@@ -8,7 +8,7 @@ os:
   - osx
 
 matrix:
-  # Clean the whole matrix
+  # Clear the whole matrix
   exclude:
     - os: linux
     - os: osx
@@ -16,9 +16,11 @@ matrix:
   include:
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf
+      # Extra packages only for this builder
       addons:
         apt:
           packages:
+            # Cross compiler and cross compiled C libraries
             - gcc-arm-linux-gnueabihf
             - libc6-armhf-cross
             - libc6-dev-armhf-cross
@@ -27,6 +29,7 @@ matrix:
       addons:
         apt:
           packages:
+            # Cross compiler and cross compiled C libraries
             - gcc-multilib
     - os: linux
       env: TARGET=x86_64-unknown-linux-gnu

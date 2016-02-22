@@ -10,7 +10,7 @@ case $TARGET in
       # information about the cross compiler
       arm-linux-gnueabihf-gcc -v
 
-      # configure the linker for cross compilation
+      # tell cargo which linker to use for cross compilation
       mkdir -p .cargo
       cat >.cargo/config <<EOF
 [target.$TARGET]
@@ -18,16 +18,20 @@ linker = "arm-linux-gnueabihf-gcc"
 EOF
     fi
 
+    # e.g. 1.6.0
     version=$(rustc -V | cut -d' ' -f2)
     tarball=rust-std-${version}-${TARGET}
 
     curl -Os http://static.rust-lang.org/dist/${tarball}.tar.gz
+
     tar xzf ${tarball}.tar.gz
+
     ${tarball}/install.sh --prefix=$(rustc --print sysroot)
+
     rm -r ${tarball}
     rm ${tarball}.tar.gz
     ;;
-  # Nothing else to do for native builds
+  # Nothing to do for native builds
   *)
     ;;
 esac
