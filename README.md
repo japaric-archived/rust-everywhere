@@ -25,9 +25,9 @@ The current CI configuration builds, tests and generates binary releases for the
 - `i686-pc-windows-msvc`
 - `i686-unknown-linux-gnu`
 - `x86_64-apple-darwin` (OSX)
-- `x86_64-pc-windows-gnu` (Linux)
+- `x86_64-pc-windows-gnu`
 - `x86_64-pc-windows-msvc` (Windows)
-- `x86_64-unknown-linux-gnu`
+- `x86_64-unknown-linux-gnu` (Linux)
 - `x86_64-unknown-linux-musl`. (Fully statically linked binaries for Linux)
 
 ## How to use
