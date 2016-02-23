@@ -18,7 +18,8 @@ lower tier platforms whenever a new git tag is pushed.
 
 The current CI configuration builds, tests and generates binary releases for the following targets:
 
-- `arm-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are not executed. And by the
+- `arm-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are executed using qemu user
+    emulation, but this approach may have problems when too many threads are spawned. Also, by the
     next Rust stable release, this target will be replaced by `armv7-unknown-linux-gnueabihf`.
 - `i686-apple-darwin`
 - `i686-pc-windows-gnu`
