@@ -3,7 +3,7 @@
 set -ex
 
 # Generate artifacts for release
-cargo build --release
+cargo build --target $TARGET --release
 
 # create a "staging" directory
 mkdir staging
