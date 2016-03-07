@@ -30,7 +30,5 @@ case $TARGET in
     ;;
 esac
 
-cargo build --target $TARGET --release
-
 # sanity check the file type
-file target/$TARGET/release/hello
+file target/$TARGET/debug/hello

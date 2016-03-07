@@ -2,6 +2,9 @@
 
 set -ex
 
+# Generate artifacts for release
+cargo build --release
+
 # create a "staging" directory
 mkdir staging
 

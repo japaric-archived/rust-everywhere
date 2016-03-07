@@ -7,3 +7,6 @@ version = "0.1.34"
 [[bin]]
 name = "hello"
 path = "src/main.rs"
+
+[build-dependencies]
+rustc_version = "0.1.7"
