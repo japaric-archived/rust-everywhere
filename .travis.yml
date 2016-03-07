@@ -7,9 +7,6 @@ env:
     # This will be part of the release tarball
     # TODO change the project name
     - PROJECT_NAME=rust-everywhere
-    # Channel used to build binary artifacts for release
-    # TODO you may want to pick a different channel
-    - RELEASE_CHANNEL=beta
 
 # AFAICT There are a few ways to set up the build jobs. This one is not the DRYest but I feel is the
 # easiest to reason about.
@@ -137,9 +134,10 @@ deploy:
   skip_cleanup: true
   # deploy when a new tag is pushed
   on:
-    # only release on the stable channel
+    # channel to use to produce the release artifacts
     # NOTE make sure you only release *once* per target
-    condition: $TRAVIS_RUST_VERSION = $RELEASE_CHANNEL
+    # TODO you may want to pick a different channel
+    condition: $TRAVIS_RUST_VERSION = stable
     tags: true
 
 branches:

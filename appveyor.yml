@@ -3,9 +3,6 @@ environment:
     # This will be used as part of the zipfile name
     # TODO change the project name
     PROJECT_NAME: rust-everywhere
-    # Channel used to build binary artifacts for release
-    # TODO you may want to pick a different channel
-    RELEASE_CHANNEL: beta
   # TODO feel free to delete targets/channels you don't need
   matrix:
     # Stable channel
@@ -95,7 +92,10 @@ deploy:
   provider: GitHub
   # deploy when a new tag is pushed and only on the stable channel
   on:
-    RUST_CHANNEL: $RELEASE_CHANNEL
+    # channel to use to produce the release artifacts
+    # NOTE make sure you only release *once* per target
+    # TODO you may want to pick a different channel
+    RUST_CHANNEL: stable
     appveyor_repo_tag: true
 
 branches:
