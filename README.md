@@ -21,15 +21,15 @@ The current CI configuration builds, tests and generates binary releases for the
 - `arm-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are executed using qemu user
     emulation, but this approach may have problems when too many threads are spawned. Also, by the
     next Rust stable release, this target will be replaced by `armv7-unknown-linux-gnueabihf`.
-- `i686-apple-darwin`
-- `i686-pc-windows-gnu`
-- `i686-pc-windows-msvc`
-- `i686-unknown-linux-gnu`
-- `x86_64-apple-darwin` (OSX)
-- `x86_64-pc-windows-gnu`
-- `x86_64-pc-windows-msvc` (Windows)
-- `x86_64-unknown-linux-gnu` (Linux)
-- `x86_64-unknown-linux-musl`. (Fully statically linked binaries for Linux)
+- `i686-apple-darwin` (32-bit OSX)
+- `i686-pc-windows-gnu` (32-bit Windows, MinGW)
+- `i686-pc-windows-msvc` (32-bit Windows, MSVC)
+- `i686-unknown-linux-gnu` (32-bit Linux)
+- `x86_64-apple-darwin` (64-bit OSX)
+- `x86_64-pc-windows-gnu` (64-bit Windows, MinGW)
+- `x86_64-pc-windows-msvc` (64-bit Windows, MSVC)
+- `x86_64-unknown-linux-gnu` (64-bit Linux)
+- `x86_64-unknown-linux-musl`. (64-bit Linux, statically linked binaries)
 
 ## How to use
 
