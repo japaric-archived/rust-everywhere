@@ -77,8 +77,9 @@ deploy:
   auth_token:
     secure: xv0gNKR4j8Zyr3yFkqBADMdkR/6CMOp5ixVFc1uf8SHOndhTXHns4dPpQJKS6MWx
   provider: GitHub
-  # deploy when a new tag is pushed
+  # deploy when a new tag is pushed and only on the stable channel
   on:
+    RUST_VERSION: 1.7.0
     appveyor_repo_tag: true
 
 branches:
