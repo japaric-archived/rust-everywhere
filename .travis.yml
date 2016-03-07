@@ -10,7 +10,6 @@ env:
 
 # AFAICT There are a few ways to set up the build jobs. This one is not the DRYest but I feel is the
 # easiest to reason about.
-# NOTE The nightly channel is untested at the moment
 # TODO Feel free to remove the channels/targets you don't need
 # NOTE Make *sure* you don't remove a reference (&foo) if you are going to dereference it (*foo)
 matrix:
@@ -75,12 +74,41 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl
       rust: beta
+    # Nightly channel
+    - os: linux
+      env: TARGET=arm-unknown-linux-gnueabihf
+      rust: nightly
+      addons:
+        apt:
+          # Use the same packages the stable version uses
+          packages: *arm_unknown_linux_gnueabihf
+    - os: osx
+      env: TARGET=i686-apple-darwin
+      rust: nightly
+    - os: linux
+      env: TARGET=i686-unknown-linux-gnu
+      rust: nightly
+      addons:
+        apt:
+          packages: *i686_unknown_linux_gnu
+    - os: osx
+      env: TARGET=x86_64-apple-darwin
+      rust: nightly
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-gnu
+      rust: nightly
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      rust: nightly
   allow_failures:
-    # NOTE This target appears to be broken on Rust 1.7.0
-    # TODO You may want to remove this entry to the include section by the time Rust 1.8.0 is out
+    # NOTE This target appears to be broken on Rust 1.7.0 and on nightlies :/
+    # TODO You may want to remove this entry by the time Rust 1.8.0 is out
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf
       rust: stable
+    - os: linux
+      env: TARGET=arm-unknown-linux-gnueabihf
+      rust: nightly
 
 install:
   - sh ci/install.sh

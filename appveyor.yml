@@ -28,6 +28,17 @@ environment:
       RUST_VERSION: beta
     - TARGET: x86_64-pc-windows-msvc
       RUST_VERSION: beta
+    # Nightly channel
+    - TARGET: i686-pc-windows-gnu
+      MSYS2_BITS: 32
+      RUST_VERSION: nightly
+    - TARGET: i686-pc-windows-msvc
+      RUST_VERSION: nightly
+    - TARGET: x86_64-pc-windows-gnu
+      MSYS2_BITS: 64
+      RUST_VERSION: nightly
+    - TARGET: x86_64-pc-windows-msvc
+      RUST_VERSION: nightly
 
 # Install Rust and Cargo
 # (Shamelessly stolen from https://github.com/rust-lang/libc/blob/master/appveyor.yml)
