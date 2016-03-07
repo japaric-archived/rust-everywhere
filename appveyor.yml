@@ -3,16 +3,31 @@ environment:
     # This will be used as part of the zipfile name
     # TODO change the project name
     PROJECT_NAME: rust-everywhere
-    # TODO you may want to change which stable Rust version is used
-    RUST_VERSION: 1.6.0
-  # TODO feel free to delete targets you are not interested in
+  # TODO feel free to delete targets/channels you don't need
+  # TODO you may want to change which stable Rust version is used
   matrix:
+    # Stable channel
     - TARGET: i686-pc-windows-gnu
       MSYS2_BITS: 32
+      RUST_VERSION: 1.7.0
     - TARGET: i686-pc-windows-msvc
+      RUST_VERSION: 1.7.0
     - TARGET: x86_64-pc-windows-gnu
       MSYS2_BITS: 64
+      RUST_VERSION: 1.7.0
     - TARGET: x86_64-pc-windows-msvc
+      RUST_VERSION: 1.7.0
+    # Beta channel
+    - TARGET: i686-pc-windows-gnu
+      MSYS2_BITS: 32
+      RUST_VERSION: beta
+    - TARGET: i686-pc-windows-msvc
+      RUST_VERSION: beta
+    - TARGET: x86_64-pc-windows-gnu
+      MSYS2_BITS: 64
+      RUST_VERSION: beta
+    - TARGET: x86_64-pc-windows-msvc
+      RUST_VERSION: beta
 
 # Install Rust and Cargo
 # (Shamelessly stolen from https://github.com/rust-lang/libc/blob/master/appveyor.yml)

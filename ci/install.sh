@@ -21,7 +21,14 @@ EOF
     fi
 
     # e.g. 1.6.0
-    version=$(rustc -V | cut -d' ' -f2)
+    case $TRAVIS_RUST_VERSION in
+      stable)
+        version=$(rustc -V | cut -d' ' -f2)
+        ;;
+      *)
+        version=$TRAVIS_RUST_VERSION
+        ;;
+    esac
     tarball=rust-std-${version}-${TARGET}
 
     curl -Os http://static.rust-lang.org/dist/${tarball}.tar.gz

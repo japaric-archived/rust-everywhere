@@ -2,59 +2,85 @@ sudo: false
 
 language: rust
 
-# NOTE This configuration has only be tested on the stable channel
-rust: stable
-
-os:
-  - linux
-  - osx
-
 env:
   global:
     # This will be part of the release tarball
     # TODO change the project name
     - PROJECT_NAME=rust-everywhere
 
+# AFAICT There are a few ways to set up the build jobs. This one is not the DRYest but I feel is the
+# easiest to reason about.
+# NOTE The nightly channel is untested at the moment
+# TODO Feel free to remove the channels/targets you don't need
+# NOTE Make *sure* you don't remove a reference (&foo) if you are going to dereference it (*foo)
 matrix:
-  # Clear the whole matrix
-  exclude:
-    - os: linux
-    - os: osx
-  # Add each target manually
-  # TODO feel free to remove targets you are not interested in
-  # TODO you may want to install packages for specific build jobs, use the addons.apt.packages
-  # pattern shown below
   include:
-    # WARNING Experimental target. Tests are executed using qemu user emulation, but this approach
-    # may have problems when too many threads are spawned. Also, by the next Rust stable release,
-    # this target will be replaced by `armv7-unknown-linux-gnueabihf`.
+    # Stable channel
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf
-      # Extra packages only for this build job
+      rust: stable
+      # Extra packages only for this job
       addons:
         apt:
-          packages:
+          packages: &arm_unknown_linux_gnueabihf
             # Cross compiler and cross compiled C libraries
             - gcc-arm-linux-gnueabihf
             - libc6-armhf-cross
             - libc6-dev-armhf-cross
             # Emulator
             - qemu-user
-    - os: linux
-      env: TARGET=i686-unknown-linux-gnu
-      addons:
-        apt:
-          packages:
-            # Cross compiler and cross compiled C libraries
-            - gcc-multilib
-    - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu
-    - os: linux
-      env: TARGET=x86_64-unknown-linux-musl
     - os: osx
       env: TARGET=i686-apple-darwin
+      rust: stable
+    - os: linux
+      env: TARGET=i686-unknown-linux-gnu
+      rust: stable
+      addons:
+        apt:
+          packages: &i686_unknown_linux_gnu
+            # Cross compiler and cross compiled C libraries
+            - gcc-multilib
     - os: osx
       env: TARGET=x86_64-apple-darwin
+      rust: stable
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-gnu
+      rust: stable
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      rust: stable
+    # Beta channel
+    - os: linux
+      env: TARGET=arm-unknown-linux-gnueabihf
+      rust: beta
+      addons:
+        apt:
+          # Use the same packages the stable version uses
+          packages: *arm_unknown_linux_gnueabihf
+    - os: osx
+      env: TARGET=i686-apple-darwin
+      rust: beta
+    - os: linux
+      env: TARGET=i686-unknown-linux-gnu
+      rust: beta
+      addons:
+        apt:
+          packages: *i686_unknown_linux_gnu
+    - os: osx
+      env: TARGET=x86_64-apple-darwin
+      rust: beta
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-gnu
+      rust: beta
+    - os: linux
+      env: TARGET=x86_64-unknown-linux-musl
+      rust: beta
+  allow_failures:
+    # NOTE This target appears to be broken on Rust 1.7.0
+    # TODO You may want to remove this entry to the include section by the time Rust 1.8.0 is out
+    - os: linux
+      env: TARGET=arm-unknown-linux-gnueabihf
+      rust: stable
 
 install:
   - sh ci/install.sh
@@ -80,6 +106,9 @@ deploy:
   skip_cleanup: true
   # deploy when a new tag is pushed
   on:
+    # only release on the stable channel
+    # NOTE make sure you only release *once* per target
+    condition: $TRAVIS_RUST_VERSION = stable
     tags: true
 
 branches:
