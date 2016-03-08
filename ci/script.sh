@@ -17,7 +17,7 @@ case "$TRAVIS_OS_NAME" in
 esac
 
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
-if [ "$host" != "$target" ]; then
+if [ "$host" != "$TARGET" ]; then
   sed -i 's:\(//.\s*```\):\1 ignore,:g' src/**/*.rs
 fi
 
