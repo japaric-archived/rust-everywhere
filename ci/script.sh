@@ -7,6 +7,20 @@ set -ex
 # to target/$TARGET/{debug,release} which can reduce the number of needed conditionals in the
 # `before_deploy`/packaging phase
 
+case "$TRAVIS_OS_NAME" in
+  linux)
+    host=x86_64-unknown-linux-gnu
+    ;;
+  osx)
+    host=x86_64-unknown-linux-gnu
+    ;;
+esac
+
+# NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
+if [ "$host" != "$target" ]; then
+  sed -i 's:\(//.\s*```\):\1 ignore,:g' src/**/*.rs
+fi
+
 case $TARGET in
   # use an emulator to run the cross compiled binaries
   arm-unknown-linux-gnueabihf)
