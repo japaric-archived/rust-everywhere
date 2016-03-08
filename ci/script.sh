@@ -12,7 +12,7 @@ case "$TRAVIS_OS_NAME" in
     host=x86_64-unknown-linux-gnu
     ;;
   osx)
-    host=x86_64-unknown-linux-gnu
+    host=x86_64-apple-darwin
     ;;
 esac
 
