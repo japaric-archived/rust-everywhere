@@ -19,7 +19,7 @@ esac
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 if [ "$host" != "$TARGET" ]; then
   if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    brew install gnu-sed --with-default-names
+    brew install gnu-sed --default-names
   fi
 
   find src -name '*.rs' -type f | xargs sed -i -e 's:\(//.\s*```\):\1 ignore,:g'
