@@ -1,7 +1,6 @@
 # `script` phase: you usually build, test and generate docs in this phase
 
 set -ex
-shopt -s globstar
 
 # TODO modify this phase as you see fit
 # PROTIP Always pass `--target $TARGET` to cargo commands, this makes cargo output build artifacts
@@ -19,7 +18,7 @@ esac
 
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 if [ "$host" != "$TARGET" ]; then
-  sed -i 's:\(//.\s*```\):\1 ignore,:g' src/**/*.rs
+  find src -name '*.rs' -type f | xargs sed -i 's:\(//.\s*```\):\1 ignore,:g'
 fi
 
 case $TARGET in
