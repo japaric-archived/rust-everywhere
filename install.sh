@@ -113,5 +113,3 @@ for file in $(find $tempdir -type f -executable); do
 done
 
 rm -r $tempdir
-
-echo $PATH | grep -q $dest || export PATH="$PATH:$dest"
