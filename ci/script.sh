@@ -18,7 +18,7 @@ esac
 
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 if [ "$host" != "$TARGET" ]; then
-  find src -name '*.rs' -type f | xargs sed -i 's:\(//.\s*```\):\1 ignore,:g'
+  find src -name '*.rs' -type f | xargs sed -i -e 's:\(//.\s*```\):\1 ignore,:g'
 fi
 
 case $TARGET in
