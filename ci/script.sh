@@ -1,6 +1,7 @@
 # `script` phase: you usually build, test and generate docs in this phase
 
 set -ex
+shopt -s globstar
 
 # TODO modify this phase as you see fit
 # PROTIP Always pass `--target $TARGET` to cargo commands, this makes cargo output build artifacts
