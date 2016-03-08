@@ -10,15 +10,17 @@ set -ex
 case "$TRAVIS_OS_NAME" in
   linux)
     host=x86_64-unknown-linux-gnu
+    sedi="sed -i"
     ;;
   osx)
     host=x86_64-apple-darwin
+    sedi="sed -i ''"
     ;;
 esac
 
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 if [ "$host" != "$TARGET" ]; then
-  find src -name '*.rs' -type f | xargs sed -i -e 's:\(//.\s*```\):\1 ignore,:g'
+  find src -name '*.rs' -type f | xargs $sedi -e 's:\(//.\s*```\):\1 ignore,:g'
 fi
 
 case $TARGET in
