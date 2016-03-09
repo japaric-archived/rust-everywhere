@@ -1,6 +1,6 @@
 sudo: false
 
-language: rust
+language: generic
 
 env:
   global:
@@ -16,8 +16,7 @@ matrix:
   include:
     # Stable channel
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf
-      rust: stable
+      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
       # Extra packages only for this job
       addons:
         apt:
@@ -29,88 +28,70 @@ matrix:
             # Emulator
             - qemu-user
     - os: osx
-      env: TARGET=i686-apple-darwin
-      rust: stable
+      env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu
-      rust: stable
+      env: TARGET=i686-unknown-linux-gnu CHANNEL=stable
       addons:
         apt:
           packages: &i686_unknown_linux_gnu
             # Cross compiler and cross compiled C libraries
             - gcc-multilib
     - os: osx
-      env: TARGET=x86_64-apple-darwin
-      rust: stable
+      env: TARGET=x86_64-apple-darwin CHANNEL=stable
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu
-      rust: stable
+      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=stable
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl
-      rust: stable
+      env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
     # Beta channel
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf
-      rust: beta
+      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=beta
       addons:
         apt:
           # Use the same packages the stable version uses
           packages: *arm_unknown_linux_gnueabihf
     - os: osx
-      env: TARGET=i686-apple-darwin
-      rust: beta
+      env: TARGET=i686-apple-darwin CHANNEL=beta
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu
-      rust: beta
+      env: TARGET=i686-unknown-linux-gnu CHANNEL=beta
       addons:
         apt:
           packages: *i686_unknown_linux_gnu
     - os: osx
-      env: TARGET=x86_64-apple-darwin
-      rust: beta
+      env: TARGET=x86_64-apple-darwin CHANNEL=beta
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu
-      rust: beta
+      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=beta
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl
-      rust: beta
+      env: TARGET=x86_64-unknown-linux-musl CHANNEL=beta
     # Nightly channel
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf
-      rust: nightly
+      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
       addons:
         apt:
           # Use the same packages the stable version uses
           packages: *arm_unknown_linux_gnueabihf
     - os: osx
-      env: TARGET=i686-apple-darwin
-      rust: nightly
+      env: TARGET=i686-apple-darwin CHANNEL=nightly
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu
-      rust: nightly
+      env: TARGET=i686-unknown-linux-gnu CHANNEL=nightly
       addons:
         apt:
           packages: *i686_unknown_linux_gnu
     - os: osx
-      env: TARGET=x86_64-apple-darwin
-      rust: nightly
+      env: TARGET=x86_64-apple-darwin CHANNEL=nightly
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu
-      rust: nightly
+      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=nightly
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl
-      rust: nightly
+      env: TARGET=x86_64-unknown-linux-musl CHANNEL=nightly
   allow_failures:
     # NOTE This target appears to be broken on Rust 1.7.0 and on nightlies :/
     # TODO You may want to remove this entry by the time Rust 1.8.0 is out
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf
-      rust: stable
+      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf
-      rust: nightly
+      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
 
 install:
+  - export PATH="$PATH:~/multirust/bin"
   - bash ci/install.sh
 
 script:
