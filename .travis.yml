@@ -83,12 +83,10 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=nightly
   allow_failures:
-    # NOTE This target appears to be broken on Rust 1.7.0 and on nightlies :/
+    # NOTE This target appears to be broken on Rust 1.7.0
     # TODO You may want to remove this entry by the time Rust 1.8.0 is out
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
-    - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
 
 install:
   - export PATH="$PATH:~/multirust/bin"
