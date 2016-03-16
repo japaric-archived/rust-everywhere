@@ -22,7 +22,7 @@ if [ "$host" != "$TARGET" ]; then
     brew install gnu-sed --default-names
   fi
 
-  find src -name '*.rs' -type f | xargs sed -i -e 's:\(//.\s*```\):\1 ignore,:g'
+  find src -name '*.rs' -type f -execdir sed -i -e 's:\(//.\s*```\):\1 ignore,:g' \;
 fi
 
 case $TARGET in
@@ -32,8 +32,8 @@ case $TARGET in
     cargo test --target $TARGET --no-run
 
     # run tests in emulator
-    find target/$TARGET/debug -maxdepth 1 -executable -type f | \
-      xargs qemu-arm -L /usr/arm-linux-gnueabihf
+    find target/$TARGET/debug -maxdepth 1 -executable -type f \
+	    -execdir qemu-arm -L /usr/arm-linux-gnueabihf \;
 
     # build the main executable
     cargo build --target $TARGET
