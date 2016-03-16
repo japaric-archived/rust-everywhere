@@ -32,8 +32,8 @@ case $TARGET in
     cargo test --target $TARGET --no-run
 
     # run tests in emulator
-    find target/$TARGET/debug -maxdepth 1 -executable -type f | \
-      xargs qemu-arm -L /usr/arm-linux-gnueabihf
+    find target/$TARGET/debug -maxdepth 1 -executable -type f \
+      -exec qemu-arm -L /usr/arm-linux-gnueabihf '{}' ';'
 
     # build the main executable
     cargo build --target $TARGET
