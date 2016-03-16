@@ -8,6 +8,8 @@ pushd multirust
 ./build.sh
 ./install.sh --prefix=~/multirust
 multirust default $CHANNEL
+rustc -V
+cargo -V
 popd
 
 case "$TRAVIS_OS_NAME" in
