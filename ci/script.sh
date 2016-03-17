@@ -17,7 +17,8 @@ case "$TRAVIS_OS_NAME" in
 esac
 
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
-if [ "$host" != "$TARGET" ]; then
+# This has been fixed in the nightly channel but it would take a while to reach the other channels
+if [ "$host" != "$TARGET" ] && [ "$CHANNEL" != "nightly" ]; then
   if [ "$TRAVIS_OS_NAME" = "osx" ]; then
     brew install gnu-sed --default-names
   fi
