@@ -116,7 +116,7 @@ deploy:
     # channel to use to produce the release artifacts
     # NOTE make sure you only release *once* per target
     # TODO you may want to pick a different channel
-    condition: $TRAVIS_RUST_VERSION = stable
+    condition: $CHANNEL = stable
     tags: true
 
 branches:
