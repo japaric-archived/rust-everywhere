@@ -17,7 +17,7 @@ install_multirust() {
   cargo -V
 
   popd
-  rm -r $temp_dir
+  rm -rf $temp_dir
 
   echo export PATH="$PATH"
 }
