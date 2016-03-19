@@ -3,7 +3,7 @@
 set -ex
 
 mk_temp_dir() {
-  return mktemp -d 2>/dev/null || mktemp -d -t tmp
+  echo $(mktemp -d 2>/dev/null || mktemp -d -t tmp)
 }
 
 install_multirust() {
