@@ -11,9 +11,8 @@ install_multirust() {
   ./build.sh
   ./install.sh --prefix=~/multirust
 
-  multirust default $CHANNEL
-
   export PATH="$PATH:~/multirust/bin"
+  multirust default $CHANNEL
   rustc -V
   cargo -V
 
