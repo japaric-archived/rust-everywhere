@@ -3,16 +3,29 @@
 set -ex
 
 # Generate artifacts for release
-cargo build --target $TARGET --release
+mk_artifacts() {
+  cargo build --target $TARGET --release
+}
 
-# create a "staging" directory
-mkdir staging
+mk_tarball() {
+  # create a "staging" directory
+  local temp_dir=$(mktemp -d)
+  local out_dir=$(pwd)
 
-# TODO update this part to copy the artifacts that make sense for your project
-# NOTE All Cargo build artifacts will be under the 'target/$TARGET/{debug,release}'
-cp target/$TARGET/release/hello staging
+  # TODO update this part to copy the artifacts that make sense for your project
+  # NOTE All Cargo build artifacts will be under the 'target/$TARGET/{debug,release}'
+  cp target/$TARGET/release/hello $temp_dir
 
-cd staging
+  pushd $temp_dir
 
-# release tarball will look like 'rust-everywhere-v1.2.3-x86_64-unknown-linux-gnu.tar.gz'
-tar czf ../${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.tar.gz *
+  # release tarball will look like 'rust-everywhere-v1.2.3-x86_64-unknown-linux-gnu.tar.gz'
+  tar czf $out_dir/${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.tar.gz *
+
+  popd $temp_dir
+  rm -r $temp_dir
+}
+
+main() {
+  mk_artifacts
+  mk_tarball
+}
