@@ -8,11 +8,11 @@ install_multirust() {
   git clone https://github.com/brson/multirust $temp_dir
 
   pushd $temp_dir
-  ./build.sh
-  ./install.sh --prefix=~/multirust
+  ./build.sh 1>&2
+  ./install.sh --prefix=~/multirust 1>&2
 
   export PATH="$PATH:~/multirust/bin"
-  multirust default $CHANNEL
+  multirust default $CHANNEL 1>&2
   rustc -V
   cargo -V
 
@@ -35,7 +35,7 @@ install_standard_crates() {
 
   if [ "$host" != "$TARGET" ]; then
     if [ "$CHANNEL" = "nightly" ]; then
-      multirust add-target nightly $TARGET
+      multirust add-target nightly $TARGET 1>&2
     else
       local version
       if [ "$CHANNEL" = "stable" ]; then
@@ -51,7 +51,7 @@ install_standard_crates() {
       curl -s https://static.rust-lang.org/dist/${tarball}.tar.gz | \
         tar --strip-components 1 -C $temp_dir -xz
 
-      $temp_dir/install.sh --prefix=$(rustc --print sysroot)
+      $temp_dir/install.sh --prefix=$(rustc --print sysroot) 1>&2
 
       rm -r $temp_dir
     fi
