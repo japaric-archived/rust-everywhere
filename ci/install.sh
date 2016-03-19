@@ -2,8 +2,12 @@
 
 set -ex
 
+mk_temp_dir() {
+  return mktemp -d 2>/dev/null || mktemp -d -t tmp
+}
+
 install_multirust() {
-  local temp_dir=$(mktemp -d)
+  local temp_dir=$(mk_temp_dir)
 
   git clone https://github.com/brson/multirust $temp_dir
 
@@ -44,7 +48,7 @@ install_standard_crates() {
 
       local tarball=rust-std-${version}-${TARGET}
 
-      local temp_dir=$(mktemp -d)
+      local temp_dir=$(mk_temp_dir)
       curl -s https://static.rust-lang.org/dist/${tarball}.tar.gz | \
         tar --strip-components 1 -C $temp_dir -xz
 
