@@ -91,7 +91,8 @@ matrix:
       env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
 
 install:
-  - eval $(bash ci/install.sh)
+  - export PATH="$PATH:~/multirust/bin"
+  - bash ci/install.sh
 
 script:
   - bash ci/script.sh
