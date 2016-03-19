@@ -48,7 +48,8 @@ install_standard_crates() {
       local tarball=rust-std-${version}-${TARGET}
 
       local temp_dir=$(mktemp -d)
-      curl -s https://static.rust-lang.org/dist/${tarball}.tar.gz | tar -C $temp_dir -xz
+      curl -s https://static.rust-lang.org/dist/${tarball}.tar.gz | \
+        tar --strip-components 1 -C $temp_dir -xz
 
       $temp_dir/install.sh --prefix=$(rustc --print sysroot)
 
