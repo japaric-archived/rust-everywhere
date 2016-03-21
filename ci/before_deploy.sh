@@ -2,6 +2,10 @@
 
 set -ex
 
+mktempd() {
+  echo $(mktemp -d 2>/dev/null || mktemp -d -t tmp)
+}
+
 # Generate artifacts for release
 mk_artifacts() {
   cargo build --target $TARGET --release
@@ -9,7 +13,7 @@ mk_artifacts() {
 
 mk_tarball() {
   # create a "staging" directory
-  local temp_dir=$(mktemp -d)
+  local temp_dir=$(mktempd)
   local out_dir=$(pwd)
 
   # TODO update this part to copy the artifacts that make sense for your project
