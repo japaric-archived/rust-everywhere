@@ -61,3 +61,5 @@ main() {
   disable_cross_doctests
   run_test_suite
 }
+
+main
