@@ -39,6 +39,11 @@ run_test_suite() {
       ;;
   esac
 
+  if [ ! -z "$QEMU_LD_PREFIX" ]; then
+    # Run tests on a single thread when using QEMU user emulation
+    export RUST_TEST_THREADS=1
+  fi
+
   cargo build --target $TARGET --verbose
   cargo run --target $TARGET
   cargo test --target $TARGET

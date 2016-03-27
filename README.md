@@ -18,9 +18,8 @@ lower tier platforms whenever a new git tag is pushed.
 
 The current CI configuration builds, tests and generates binary releases for the following targets:
 
-- `arm-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are executed using qemu user
-    emulation, but this approach may have problems when too many threads are spawned. Also, by the
-    next Rust stable release, this target will be replaced by `armv7-unknown-linux-gnueabihf`.
+- `armv7-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are executed using qemu
+    user emulation, but this approach has problems when too many threads are spawned.
 - `i686-apple-darwin` (32-bit OSX)
 - `i686-pc-windows-gnu` (32-bit Windows, MinGW)
 - `i686-pc-windows-msvc` (32-bit Windows, MSVC)
@@ -47,8 +46,8 @@ All these aspects can be configured:
 Once configured, simply push a new git tag to build a new binary release:
 
 ``` sh
-git tag v1.2.3
-git push --tags
+$ git tag v1.2.3
+$ git push --tags
 ```
 
 You should see the release tarballs/zipfiles under your project's ['releases'] page.
