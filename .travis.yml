@@ -1,5 +1,3 @@
-sudo: false
-
 language: generic
 
 env:
@@ -17,6 +15,7 @@ matrix:
     # Stable channel
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
+      sudo: required
       # Extra packages only for this job
       addons:
         apt:
@@ -25,8 +24,9 @@ matrix:
             - gcc-arm-linux-gnueabihf
             - libc6-armhf-cross
             - libc6-dev-armhf-cross
-            # Emulator
-            - qemu-user
+            # Transparent emulation
+            - qemu-user-static
+            - binfmt-support
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
@@ -45,6 +45,7 @@ matrix:
     # Beta channel
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=beta
+      sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses
@@ -65,6 +66,7 @@ matrix:
     # Nightly channel
     - os: linux
       env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
+      sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses

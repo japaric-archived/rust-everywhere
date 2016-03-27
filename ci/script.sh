@@ -31,27 +31,17 @@ disable_cross_doctests() {
 # `before_deploy`/packaging phase
 run_test_suite() {
   case $TARGET in
-    # use an emulator to run the cross compiled binaries
+    # configure emulation for transparent execution of foreign binaries
     arm-unknown-linux-gnueabihf)
-      # build tests but don't run them
-      cargo test --target $TARGET --no-run
-
-      # run tests in emulator
-      find target/$TARGET/debug -maxdepth 1 -executable -type f \
-        -exec qemu-arm -L /usr/arm-linux-gnueabihf '{}' ';'
-
-      # build the main executable
-      cargo build --target $TARGET
-
-      # run the main executable using the emulator
-      qemu-arm -L /usr/arm-linux-gnueabihf target/$TARGET/debug/hello
+      export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
       ;;
     *)
-      cargo build --target $TARGET --verbose
-      cargo run --target $TARGET
-      cargo test --target $TARGET
       ;;
   esac
+
+  cargo build --target $TARGET --verbose
+  cargo run --target $TARGET
+  cargo test --target $TARGET
 
   # sanity check the file type
   file target/$TARGET/debug/hello
