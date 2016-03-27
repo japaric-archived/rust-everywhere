@@ -30,22 +30,14 @@ disable_cross_doctests() {
 # to target/$TARGET/{debug,release} which can reduce the number of needed conditionals in the
 # `before_deploy`/packaging phase
 run_test_suite() {
-  local arch=
   case $TARGET in
     # configure emulation for transparent execution of foreign binaries
     arm-unknown-linux-gnueabihf)
       export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
-      arch=arm
       ;;
     *)
       ;;
   esac
-
-  # mount binfmt_misc
-  if [ ! -z "$QEMU_LD_PREFIX" ]; then
-    sudo mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
-    sudo update-binfmts --enable qemu-${arch}
-  fi
 
   cargo build --target $TARGET --verbose
   cargo run --target $TARGET
