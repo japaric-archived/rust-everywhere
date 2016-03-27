@@ -32,7 +32,7 @@ disable_cross_doctests() {
 run_test_suite() {
   case $TARGET in
     # configure emulation for transparent execution of foreign binaries
-    arm-unknown-linux-gnueabihf)
+    arm*-unknown-linux-gnueabihf)
       export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
       ;;
     *)
