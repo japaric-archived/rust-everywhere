@@ -13,24 +13,18 @@ env:
 matrix:
   include:
     # Stable channel
-    - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
-      sudo: required
-      # Extra packages only for this job
-      addons:
-        apt:
-          packages: &arm_unknown_linux_gnueabihf
-            # Cross compiler and cross compiled C libraries
-            - gcc-arm-linux-gnueabihf
-            - libc6-armhf-cross
-            - libc6-dev-armhf-cross
-            # Transparent emulation
-            - qemu-user-static
-            - binfmt-support
+    # NOTE armv7 std not available on 1.7.0. It should be available on 1.8.0
+    #- os: linux
+      #env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
+      #sudo: required
+      #addons:
+        #apt:
+          #packages: &armv7_unknown_linux_gnueabihf
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
       env: TARGET=i686-unknown-linux-gnu CHANNEL=stable
+      # Extra packages only for this job
       addons:
         apt:
           packages: &i686_unknown_linux_gnu
@@ -44,12 +38,20 @@ matrix:
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
     # Beta channel
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=beta
+      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=beta
+      # sudo is needed for binfmt_misc, which is needed for transparent user qemu emulation
       sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses
-          packages: *arm_unknown_linux_gnueabihf
+          packages: &armv7_unknown_linux_gnueabihf
+            # Cross compiler and cross compiled C libraries
+            - gcc-arm-linux-gnueabihf
+            - libc6-armhf-cross
+            - libc6-dev-armhf-cross
+            # Transparent emulation
+            - qemu-user-static
+            - binfmt-support
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=beta
     - os: linux
@@ -65,12 +67,12 @@ matrix:
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=beta
     # Nightly channel
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
+      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=nightly
       sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses
-          packages: *arm_unknown_linux_gnueabihf
+          packages: *armv7_unknown_linux_gnueabihf
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=nightly
     - os: linux
@@ -85,16 +87,10 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=nightly
   allow_failures:
-    # NOTE rust-lang/rust#30966 Rust 1.7.0 for ARM doesn't work with glibc <2.17. Here we use Ubuntu
-    # 12.04 which ships with glibc-2.15 so this build job will always fail. This issue has been
-    # fixed in the nightlies and the fix will reach beta and stable by the next stable release.
-    # TODO Remove this entry by the time Rust 1.8.0 is out
-    - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=stable
     # NOTE rust-lang/rust#32523 std tarballs are currently missing the test crate, if you cross
     # compiling unit tests, this build job will fail
     - os: linux
-      env: TARGET=arm-unknown-linux-gnueabihf CHANNEL=nightly
+      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=nightly
 
 install:
   - export PATH="$PATH:~/multirust/bin"

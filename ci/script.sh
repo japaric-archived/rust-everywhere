@@ -32,12 +32,17 @@ disable_cross_doctests() {
 run_test_suite() {
   case $TARGET in
     # configure emulation for transparent execution of foreign binaries
-    arm-unknown-linux-gnueabihf)
+    arm*-unknown-linux-gnueabihf)
       export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
       ;;
     *)
       ;;
   esac
+
+  if [ ! -z "$QEMU_LD_PREFIX" ]; then
+    # Run tests on a single thread when using QEMU user emulation
+    export RUST_TEST_THREADS=1
+  fi
 
   cargo build --target $TARGET --verbose
   cargo run --target $TARGET
