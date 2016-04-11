@@ -29,9 +29,6 @@ install_rustup() {
   rustup default $CHANNEL
   rustc -V
   cargo -V
-
-  popd
-  rm -rf $temp_dir
 }
 
 install_standard_crates() {
