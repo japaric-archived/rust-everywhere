@@ -93,7 +93,7 @@ matrix:
       env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=nightly
 
 install:
-  - export PATH="$PATH:~/multirust/bin"
+  - export PATH="$PATH:~/.cargo/bin"
   - bash ci/install.sh
 
 script:
