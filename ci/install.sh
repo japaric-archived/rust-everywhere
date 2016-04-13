@@ -33,26 +33,19 @@ install_rustup() {
 
 install_standard_crates() {
   if [ "$host" != "$TARGET" ]; then
-    if [ "$CHANNEL" = "nightly" ]; then
+    if [ ! "$CHANNEL" = "stable" ]; then
       rustup target add $TARGET
     else
-      local version
-      if [ "$CHANNEL" = "stable" ]; then
-        # e.g. 1.6.0
-        version=$(rustc -V | cut -d' ' -f2)
-      else
-        version=beta
-      fi
-
+      local version=$(rustc -V | cut -d' ' -f2)
       local tarball=rust-std-${version}-${TARGET}
 
-      local temp_dir=$(mktempd)
+      local td=$(mktempd)
       curl -s https://static.rust-lang.org/dist/${tarball}.tar.gz | \
-        tar --strip-components 1 -C $temp_dir -xz
+        tar --strip-components 1 -C $td -xz
 
-      $temp_dir/install.sh --prefix=$(rustc --print sysroot)
+      $td/install.sh --prefix=$(rustc --print sysroot)
 
-      rm -r $temp_dir
+      rm -r $td
     fi
   fi
 }
