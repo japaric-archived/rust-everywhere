@@ -16,9 +16,17 @@ matrix:
     - os: linux
       env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
       sudo: required
+      # Extra packages only for this job
       addons:
         apt:
           packages: &armv7_unknown_linux_gnueabihf
+            # Cross compiler and cross compiled C libraries
+            - gcc-arm-linux-gnueabihf
+            - libc6-armhf-cross
+            - libc6-dev-armhf-cross
+            # Transparent emulation
+            - qemu-user-static
+            - binfmt-support
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
@@ -43,14 +51,7 @@ matrix:
       addons:
         apt:
           # Use the same packages the stable version uses
-          packages: &armv7_unknown_linux_gnueabihf
-            # Cross compiler and cross compiled C libraries
-            - gcc-arm-linux-gnueabihf
-            - libc6-armhf-cross
-            - libc6-dev-armhf-cross
-            # Transparent emulation
-            - qemu-user-static
-            - binfmt-support
+          packages: *armv7_unknown_linux_gnueabihf
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=beta
     - os: linux
