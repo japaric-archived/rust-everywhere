@@ -16,7 +16,7 @@ disable_cross_doctests() {
       ;;
   esac
 
-  if [ "$host" != "$TARGET" ] && [ "$CHANNEL" != "nightly" ]; then
+  if [ "$host" != "$TARGET" ] && [ "$CHANNEL" = "stable" ]; then
     if [ "$TRAVIS_OS_NAME" = "osx" ]; then
       brew install gnu-sed --default-names
     fi
