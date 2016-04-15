@@ -86,8 +86,10 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=nightly
 
-install:
+before_install:
   - export PATH="$PATH:$HOME/.cargo/bin"
+
+install:
   - bash ci/install.sh
 
 script:
