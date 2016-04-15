@@ -13,13 +13,12 @@ env:
 matrix:
   include:
     # Stable channel
-    # NOTE armv7 std not available on 1.7.0. It should be available on 1.8.0
-    #- os: linux
-      #env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
-      #sudo: required
-      #addons:
-        #apt:
-          #packages: &armv7_unknown_linux_gnueabihf
+    - os: linux
+      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
+      sudo: required
+      addons:
+        apt:
+          packages: &armv7_unknown_linux_gnueabihf
     - os: osx
       env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
