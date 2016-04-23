@@ -2,6 +2,8 @@
 
 set -ex
 
+. $(dirname $0)/utils.sh
+
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 # This has been fixed in the nightly channel but it would take a while to reach the other channels
 disable_cross_doctests() {
