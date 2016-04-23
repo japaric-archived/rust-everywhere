@@ -2,9 +2,7 @@
 
 set -ex
 
-mktempd() {
-  echo $(mktemp -d 2>/dev/null || mktemp -d -t tmp)
-}
+. $(dirname $0)/utils.sh
 
 # Generate artifacts for release
 mk_artifacts() {
