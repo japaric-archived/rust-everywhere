@@ -20,7 +20,7 @@ install_standard_crates() {
 configure_cargo() {
   local prefix=$(gcc_prefix)
 
-  if [ -n $prefix ]; then
+  if [ ! -z $prefix ]; then
       # information about the cross compiler
       $prefix-gcc -v
 
