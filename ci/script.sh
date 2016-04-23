@@ -2,21 +2,12 @@
 
 set -ex
 
+. $(dirname $0)/utils.sh
+
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 # This has been fixed in the nightly channel but it would take a while to reach the other channels
 disable_cross_doctests() {
-  local host
-
-  case "$TRAVIS_OS_NAME" in
-    linux)
-      host=x86_64-unknown-linux-gnu
-      ;;
-    osx)
-      host=x86_64-apple-darwin
-      ;;
-  esac
-
-  if [ "$host" != "$TARGET" ] && [ "$CHANNEL" = "stable" ]; then
+  if [ $(host) != "$TARGET" ] && [ "$CHANNEL" = "stable" ]; then
     if [ "$TRAVIS_OS_NAME" = "osx" ]; then
       brew install gnu-sed --default-names
     fi
