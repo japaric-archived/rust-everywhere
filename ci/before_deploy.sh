@@ -44,6 +44,8 @@ main() {
 
   if [ ! -z $MAKE_DEB ]; then
      dtd=$(mktempd)
+     mkdir -p $dtd/debian/usr/bin
+
      mk_deb
 
      mkdir -p $dtd/debian/DEBIAN
