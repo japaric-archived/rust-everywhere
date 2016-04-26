@@ -30,7 +30,7 @@ dobin() {
 
     local f prefix=$(gcc_prefix)
     for f in "$@"; do
-        install -m0755 $dtd/debian/usr/bin/
+        install -m0755 $f $dtd/debian/usr/bin/
         ${prefix}strip -s $dtd/debian/usr/bin/$f
     done
 }
