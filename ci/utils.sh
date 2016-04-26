@@ -16,10 +16,38 @@ host() {
 gcc_prefix() {
     case "$TARGET" in
         arm*-gnueabihf)
-            echo arm-linux-gnueabihf
+            echo arm-linux-gnueabihf-
             ;;
         *)
             return
+            ;;
+    esac
+}
+
+dobin() {
+    [ -z $MAKE_DEB ] && die 'dobin: $MAKE_DEB not set'
+    [ $# -lt 1 ] && die "dobin: at least one argument needed"
+
+    local f prefix=$(gcc_prefix)
+    for f in "$@"; do
+        install -m0755 $dtd/debian/usr/bin/
+        ${prefix}strip -s $dtd/debian/usr/bin/$f
+    done
+}
+
+architecture() {
+    case $1 in
+        x86_64-unknown-linux-gnu|x86_64-unknown-linux-musl)
+            echo amd64
+            ;;
+        i686-unknown-linux-gnu)
+            echo i386
+            ;;
+        arm*-unknown-linux-gnueabihf)
+            echo armhf
+            ;;
+        *)
+            die "architecture: unexpected target $TARGET"
             ;;
     esac
 }
