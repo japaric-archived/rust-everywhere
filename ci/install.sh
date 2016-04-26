@@ -22,13 +22,13 @@ configure_cargo() {
 
   if [ ! -z $prefix ]; then
       # information about the cross compiler
-      $prefix-gcc -v
+      ${prefix}gcc -v
 
       # tell cargo which linker to use for cross compilation
       mkdir -p .cargo
       cat >>.cargo/config <<EOF
 [target.$TARGET]
-linker = "$prefix-gcc"
+linker = "${prefix}gcc"
 EOF
   fi
 }
