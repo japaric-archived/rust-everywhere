@@ -42,7 +42,7 @@ main() {
   mk_artifacts
   mk_tarball
 
-  if [ ! -z $MAKE_DEB ]; thenn
+  if [ ! -z $MAKE_DEB ]; then
      dtd=$(mktempd)
      mk_deb
 
