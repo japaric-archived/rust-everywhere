@@ -5,40 +5,40 @@ set -ex
 . $(dirname $0)/utils.sh
 
 install_rustup() {
-  curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=$CHANNEL
+    curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=$CHANNEL
 
-  rustc -V
-  cargo -V
+    rustc -V
+    cargo -V
 }
 
 install_standard_crates() {
-  if [ $(host) != "$TARGET" ]; then
-    rustup target add $TARGET
-  fi
+    if [ $(host) != "$TARGET" ]; then
+        rustup target add $TARGET
+    fi
 }
 
 configure_cargo() {
-  local prefix=$(gcc_prefix)
+    local prefix=$(gcc_prefix)
 
-  if [ ! -z $prefix ]; then
-      # information about the cross compiler
-      ${prefix}gcc -v
+    if [ ! -z $prefix ]; then
+        # information about the cross compiler
+        ${prefix}gcc -v
 
-      # tell cargo which linker to use for cross compilation
-      mkdir -p .cargo
-      cat >>.cargo/config <<EOF
+        # tell cargo which linker to use for cross compilation
+        mkdir -p .cargo
+        cat >>.cargo/config <<EOF
 [target.$TARGET]
 linker = "${prefix}gcc"
 EOF
-  fi
+    fi
 }
 
 main() {
-  install_rustup
-  install_standard_crates
-  configure_cargo
+    install_rustup
+    install_standard_crates
+    configure_cargo
 
-  # TODO if you need to install extra stuff add it here
+    # TODO if you need to install extra stuff add it here
 }
 
 main
