@@ -7,7 +7,7 @@ set -ex
 # NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
 # This has been fixed in the nightly channel but it would take a while to reach the other channels
 disable_cross_doctests() {
-    if [ $(host) != "$TARGET" ] && [ "$CHANNEL" = "stable" ]; then
+    if [ $(host) != "$TARGET" ] && [ "$TRAVIS_RUST_VERSION" = "stable" ]; then
         if [ "$TRAVIS_OS_NAME" = "osx" ]; then
             brew install gnu-sed --default-names
         fi
