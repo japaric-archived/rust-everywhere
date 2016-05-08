@@ -1,4 +1,4 @@
-language: generic
+language: rust
 cache: cargo
 
 env:
@@ -20,7 +20,8 @@ matrix:
   include:
     # Stable channel
     - os: linux
-      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=stable
+      rust: stable
+      env: TARGET=aarch64-unknown-linux-gnu
       # need Trusty because the glibc in Precise is too old and doesn't support 64-bit arm
       dist: trusty
       sudo: required
@@ -32,7 +33,8 @@ matrix:
             - qemu-user-static
             - binfmt-support
     - os: linux
-      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
+      rust: stable
+      env: TARGET=armv7-unknown-linux-gnueabihf
       # sudo is needed for binfmt_misc, which is needed for transparent user qemu emulation
       sudo: required
       addons:
@@ -46,76 +48,95 @@ matrix:
             - qemu-user-static
             - binfmt-support
     - os: osx
-      env: TARGET=i686-apple-darwin CHANNEL=stable
+      rust: stable
+      env: TARGET=i686-apple-darwin
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu CHANNEL=stable
+      rust: stable
+      env: TARGET=i686-unknown-linux-gnu
       addons:
         apt:
           packages: &i686_unknown_linux_gnu
             # Cross compiler and cross compiled C libraries
             - gcc-multilib
     - os: osx
-      env: TARGET=x86_64-apple-darwin CHANNEL=stable
+      rust: stable
+      env: TARGET=x86_64-apple-darwin
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=stable
+      rust: stable
+      env: TARGET=x86_64-unknown-linux-gnu
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
+      rust: stable
+      env: TARGET=x86_64-unknown-linux-musl
     # Beta channel
     - os: linux
-      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=beta
+      rust: beta
+      env: TARGET=aarch64-unknown-linux-gnu
       dist: trusty
       sudo: required
       addons:
         apt:
           packages: *aarch64_unknown_linux_gnu
     - os: linux
-      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=beta
+      rust: beta
+      env: TARGET=armv7-unknown-linux-gnueabihf
       sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses
           packages: *armv7_unknown_linux_gnueabihf
     - os: osx
-      env: TARGET=i686-apple-darwin CHANNEL=beta
+      rust: beta
+      env: TARGET=i686-apple-darwin
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu CHANNEL=beta
+      rust: beta
+      env: TARGET=i686-unknown-linux-gnu
       addons:
         apt:
           packages: *i686_unknown_linux_gnu
     - os: osx
-      env: TARGET=x86_64-apple-darwin CHANNEL=beta
+      rust: beta
+      env: TARGET=x86_64-apple-darwin
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=beta
+      rust: beta
+      env: TARGET=x86_64-unknown-linux-gnu
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl CHANNEL=beta
+      rust: beta
+      env: TARGET=x86_64-unknown-linux-musl
     # Nightly channel
     - os: linux
-      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=nightly
+      rust: nightly
+      env: TARGET=aarch64-unknown-linux-gnu
       dist: trusty
       sudo: required
       addons:
         apt:
           packages: *aarch64_unknown_linux_gnu
     - os: linux
-      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=nightly
+      rust: nightly
+      env: TARGET=armv7-unknown-linux-gnueabihf
       sudo: required
       addons:
         apt:
           # Use the same packages the stable version uses
           packages: *armv7_unknown_linux_gnueabihf
     - os: osx
-      env: TARGET=i686-apple-darwin CHANNEL=nightly
+      rust: nightly
+      env: TARGET=i686-apple-darwin
     - os: linux
-      env: TARGET=i686-unknown-linux-gnu CHANNEL=nightly
+      rust: nightly
+      env: TARGET=i686-unknown-linux-gnu
       addons:
         apt:
           packages: *i686_unknown_linux_gnu
     - os: osx
-      env: TARGET=x86_64-apple-darwin CHANNEL=nightly
+      rust: nightly
+      env: TARGET=x86_64-apple-darwin
     - os: linux
-      env: TARGET=x86_64-unknown-linux-gnu CHANNEL=nightly
+      rust: nightly
+      env: TARGET=x86_64-unknown-linux-gnu
     - os: linux
-      env: TARGET=x86_64-unknown-linux-musl CHANNEL=nightly
+      rust: nightly
+      env: TARGET=x86_64-unknown-linux-musl
 
 before_install:
   - export PATH="$PATH:$HOME/.cargo/bin"
@@ -148,7 +169,7 @@ deploy:
     # channel to use to produce the release artifacts
     # NOTE make sure you only release *once* per target
     # TODO you may want to pick a different channel
-    condition: $CHANNEL = stable
+    condition: $TRAVIS_RUST_VERSION = stable
     tags: true
 
 branches:
