@@ -22,8 +22,12 @@ information about dependencies. If you need more features in this area open an i
 
 The current CI configuration builds, tests and generates binary releases for the following targets:
 
-- `armv7-unknown-linux-gnueabihf`. **WARNING** Experimental target. Tests are executed using qemu
-    user emulation, but this approach has problems when too many threads are spawned.
+- `aarch64-unknown-linux-gnu`. (Linux on 64-bit ARM) **WARNING** Experimental target. Tests are
+executed using qemu user emulation, but this approach has problems when too many threads are
+spawned.
+- `armv7-unknown-linux-gnueabihf` (Linux on 32-bit ARM). **WARNING** Experimental target. Tests are
+executed using qemu user emulation, but this approach has problems when too many threads are
+ spawned.
 - `i686-apple-darwin` (32-bit OSX)
 - `i686-pc-windows-gnu` (32-bit Windows, MinGW)
 - `i686-pc-windows-msvc` (32-bit Windows, MSVC)
