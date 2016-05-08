@@ -26,59 +26,59 @@
 set -e
 
 err() {
-  echo "error: $@" 1>&2
+    echo "error: $@" 1>&2
 
-  if [ ! -z $tempdir ]; then
-    rm -r $tempdir
-  fi
+    if [ ! -z $tempdir ]; then
+        rm -r $tempdir
+    fi
 
-  exit 1
+    exit 1
 }
 
 while [[ $# > 1 ]]; do
-  key="$1"
+    key="$1"
 
-  case $key in
-    --from)
-      owner_repo="$2"
-      shift
-      ;;
-    --package)
-      package="$2"
-      shift
-      ;;
-    --tag)
-      tag="$2"
-      shift
-      ;;
-    --for)
-      target="$2"
-      shift
-      ;;
-    --at)
-      dest="$2"
-      shift
-      ;;
-    *)
-      ;;
-  esac
-  shift
+    case $key in
+        --from)
+            owner_repo="$2"
+            shift
+            ;;
+        --package)
+            package="$2"
+            shift
+            ;;
+        --tag)
+            tag="$2"
+            shift
+            ;;
+        --for)
+            target="$2"
+            shift
+            ;;
+        --at)
+            dest="$2"
+            shift
+            ;;
+        *)
+            ;;
+    esac
+    shift
 done
 
 if [ -z "$owner_repo" ]; then
-  err 'need to specify owner and repository name using --from. Example: `install.sh --from rust-lang/rust`'
+    err 'need to specify owner and repository name using --from. Example: `install.sh --from rust-lang/rust`'
 fi
 
 if [ -z "$package" ]; then
-  package=$(echo $owner_repo | cut -d'/' -f2)
+    package=$(echo $owner_repo | cut -d'/' -f2)
 fi
 
 if [ -z "$target" ]; then
-  target=$(rustc -Vv | grep host | cut -d' ' -f2)
+    target=$(rustc -Vv | grep host | cut -d' ' -f2)
 fi
 
 if [ -z "$dest" ]; then
-  dest="$(rustc --print sysroot)/cargo/bin"
+    dest="$(rustc --print sysroot)/cargo/bin"
 fi
 
 url="https://github.com/$owner_repo"
@@ -89,7 +89,7 @@ echo "Package: $package"
 url+="/releases"
 
 if [ -z "$tag" ]; then
-  tag=$(curl -s "$url/latest" | cut -d'"' -f2 | rev | cut -d'/' -f1 | rev)
+    tag=$(curl -s "$url/latest" | cut -d'"' -f2 | rev | cut -d'/' -f1 | rev)
 fi
 
 echo "Tag: $tag"
@@ -104,12 +104,12 @@ tempdir=$(mktemp -d)
 curl -sL $url | tar -C $tempdir -xz
 
 for file in $(find $tempdir -type f -executable); do
-  if [ -e "$dest/$(basename $file)" ]; then
-    err "$(basename $file) already exists in $dest"
-  else
-    mkdir -p $dest
-    cp $file $dest/.
-  fi
+    if [ -e "$dest/$(basename $file)" ]; then
+        err "$(basename $file) already exists in $dest"
+    else
+        mkdir -p $dest
+        cp $file $dest/.
+    fi
 done
 
 rm -r $tempdir

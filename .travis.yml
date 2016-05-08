@@ -19,9 +19,21 @@ matrix:
   include:
     # Stable channel
     - os: linux
-      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
+      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=stable
+      # need Trusty because the glibc in Precise is too old and doesn't support 64-bit arm
+      dist: trusty
       sudo: required
       # Extra packages only for this job
+      addons:
+        apt:
+          packages: &aarch64_unknown_linux_gnu
+            # Transparent emulation
+            - qemu-user-static
+            - binfmt-support
+    - os: linux
+      env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=stable
+      # sudo is needed for binfmt_misc, which is needed for transparent user qemu emulation
+      sudo: required
       addons:
         apt:
           packages: &armv7_unknown_linux_gnueabihf
@@ -36,7 +48,6 @@ matrix:
       env: TARGET=i686-apple-darwin CHANNEL=stable
     - os: linux
       env: TARGET=i686-unknown-linux-gnu CHANNEL=stable
-      # Extra packages only for this job
       addons:
         apt:
           packages: &i686_unknown_linux_gnu
@@ -50,8 +61,14 @@ matrix:
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=stable
     # Beta channel
     - os: linux
+      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=beta
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *aarch64_unknown_linux_gnu
+    - os: linux
       env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=beta
-      # sudo is needed for binfmt_misc, which is needed for transparent user qemu emulation
       sudo: required
       addons:
         apt:
@@ -71,6 +88,13 @@ matrix:
     - os: linux
       env: TARGET=x86_64-unknown-linux-musl CHANNEL=beta
     # Nightly channel
+    - os: linux
+      env: TARGET=aarch64-unknown-linux-gnu CHANNEL=nightly
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *aarch64_unknown_linux_gnu
     - os: linux
       env: TARGET=armv7-unknown-linux-gnueabihf CHANNEL=nightly
       sudo: required
