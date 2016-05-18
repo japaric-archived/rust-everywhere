@@ -32,6 +32,7 @@ executed using qemu user emulation, but this approach has problems when too many
 - `i686-pc-windows-gnu` (32-bit Windows, MinGW)
 - `i686-pc-windows-msvc` (32-bit Windows, MSVC)
 - `i686-unknown-linux-gnu` (32-bit Linux)
+- `i686-unknown-linux-musl`. (32-bit Linux, statically linked binaries)
 - `x86_64-apple-darwin` (64-bit OSX)
 - `x86_64-pc-windows-gnu` (64-bit Windows, MinGW)
 - `x86_64-pc-windows-msvc` (64-bit Windows, MSVC)
