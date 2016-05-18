@@ -146,6 +146,14 @@ matrix:
     - os: linux
       rust: nightly
       env: TARGET=x86_64-unknown-linux-musl
+  allow_failures:
+    # Target `i686-unknown-linux-musl` is currently only available on the nightly channel
+    - os: linux
+      rust: stable
+      env: TARGET=i686-unknown-linux-musl
+    - os: linux
+      rust: beta
+      env: TARGET=i686-unknown-linux-musl
 
 before_install:
   - export PATH="$PATH:$HOME/.cargo/bin"
