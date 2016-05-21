@@ -43,7 +43,7 @@ architecture() {
         x86_64-unknown-linux-gnu|x86_64-unknown-linux-musl)
             echo amd64
             ;;
-        i686-unknown-linux-gnu)
+        i686-unknown-linux-gnu|i686-unknown-linux-musl)
             echo i386
             ;;
         arm*-unknown-linux-gnueabihf)
