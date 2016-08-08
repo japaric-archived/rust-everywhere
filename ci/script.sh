@@ -4,18 +4,6 @@ set -ex
 
 . $(dirname $0)/utils.sh
 
-# NOTE Workaround for rust-lang/rust#31907 - disable doc tests when cross compiling
-# This has been fixed in the nightly channel but it would take a while to reach the other channels
-disable_cross_doctests() {
-    if [ $(host) != "$TARGET" ] && [ "$TRAVIS_RUST_VERSION" = "stable" ]; then
-        if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-            brew install gnu-sed --default-names
-        fi
-
-        find src -name '*.rs' -type f | xargs sed -i -e 's:\(//.\s*```\):\1 ignore,:g'
-    fi
-}
-
 # TODO modify this function as you see fit
 # PROTIP Always pass `--target $TARGET` to cargo commands, this makes cargo output build artifacts
 # to target/$TARGET/{debug,release} which can reduce the number of needed conditionals in the
@@ -47,7 +35,6 @@ run_test_suite() {
 }
 
 main() {
-    disable_cross_doctests
     run_test_suite
 }
 
