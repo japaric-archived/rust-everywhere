@@ -47,7 +47,9 @@ install:
   - rustc -V
   - cargo -V
 
-# ???
+# 'cargo test' takes care of building for us, so disable Appveyor's build stage. This prevents
+# the "directory does not contain a project or solution file" error.
+# source: https://github.com/starkat99/appveyor-rust/blob/master/appveyor.yml#L113
 build: false
 
 # Equivalent to Travis' `script` phase
