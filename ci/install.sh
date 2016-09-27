@@ -10,6 +10,9 @@ install_c_toolchain() {
             sudo apt-get install -y --no-install-recommends \
                  gcc-aarch64-linux-gnu libc6-arm64-cross libc6-dev-arm64-cross
             ;;
+	*-musl)
+	    sudo apt-get install musl-tools
+	    ;;
         *)
             # For other targets, this is handled by addons.apt.packages in .travis.yml
             ;;
