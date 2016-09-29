@@ -61,6 +61,14 @@ matrix:
     - os: linux
       rust: stable
       env: TARGET=i686-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: &musl_packages
+          - musl
+          - musl-dev
+          - musl-tools
     - os: osx
       rust: stable
       env: TARGET=x86_64-apple-darwin
@@ -70,6 +78,11 @@ matrix:
     - os: linux
       rust: stable
       env: TARGET=x86_64-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *musl_packages
     # Beta channel
     - os: linux
       rust: beta
@@ -99,6 +112,11 @@ matrix:
     - os: linux
       rust: beta
       env: TARGET=i686-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *musl_packages
     - os: osx
       rust: beta
       env: TARGET=x86_64-apple-darwin
@@ -108,6 +126,11 @@ matrix:
     - os: linux
       rust: beta
       env: TARGET=x86_64-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *musl_packages
     # Nightly channel
     - os: linux
       rust: nightly
@@ -137,6 +160,11 @@ matrix:
     - os: linux
       rust: nightly
       env: TARGET=i686-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *musl_packages
     - os: osx
       rust: nightly
       env: TARGET=x86_64-apple-darwin
@@ -146,6 +174,11 @@ matrix:
     - os: linux
       rust: nightly
       env: TARGET=x86_64-unknown-linux-musl
+      dist: trusty
+      sudo: required
+      addons:
+        apt:
+          packages: *musl_packages
   allow_failures:
     # TODO You might need to allow failures for some target on some channel for some reason. Below
     # there's one (commented out) example of how to do that. Just change the OS, channel and TARGET

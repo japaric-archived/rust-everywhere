@@ -21,6 +21,9 @@ gcc_prefix() {
         arm*-gnueabihf)
             echo arm-linux-gnueabihf-
             ;;
+        *-musl)
+            echo musl-
+            ;;
         *)
             return
             ;;
