@@ -65,10 +65,10 @@ matrix:
       sudo: required
       addons:
         apt:
-        packages: &musl_packages
-           - musl
-           - musl-dev
-           - musl-tools
+          packages: &musl_packages
+          - musl
+          - musl-dev
+          - musl-tools
     - os: osx
       rust: stable
       env: TARGET=x86_64-apple-darwin
