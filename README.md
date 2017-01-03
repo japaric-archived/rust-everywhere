@@ -1,3 +1,36 @@
+# Status
+
+This project has been **SUPERSEDED**
+by [`trust`](https://github.com/japaric/trust), another CI template, and won't
+received updates or bug fixes.
+
+## Why
+
+`trust` makes things simpler and better because it's based on
+the [`cross`](https://github.com/japaric/cross) tool. Among the advantages we
+have:
+
+- It's easy to run the test script locally (on Linux). No need to install cross
+  toolchains or other foreign stuff, simply install `cross` and, for example,
+  call `TARGET=aarch64-unknown-linux-gnu sh ci/script.sh`.
+
+- Painless upgrades. Most upgrades, to get support for new targets or to fix
+  cross compilation problems related to C dependencies, will pretty much only
+  involve [bumping the version of the `cross` tool][bump] rather than more
+  invasive changes to `.travis.yml` or to the scripts in the `ci` directory.
+
+[bump]: https://github.com/japaric/trust/blob/v0.1.0/ci/install.sh#L20
+
+- Support for more targets / architectures. `trust` supports x86, ARM, MIPS,
+  PowerPC and SystemZ.
+
+- The CI scripts are simpler as the requirements for cross compilation are
+  handled by `cross` and don't show up in the CI scripts.
+
+-- [@japaric](https://github.com/japaric), 2017-01-03
+
+---
+
 [![Travis](https://travis-ci.org/japaric/rust-everywhere.svg?branch=master)](https://travis-ci.org/japaric/rust-everywhere)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/d37xqtcx5ct9fyfr?svg=true)](https://ci.appveyor.com/project/japaric/rust-everywhere)
 
